@@ -117,6 +117,7 @@ from .easy_game import (
     is_left_mouse_button_clicked,
     is_middle_mouse_button_clicked,
     is_right_mouse_button_clicked,
+    update_screen,
 )
 from .easy_generator import (
     generate_api_key,
