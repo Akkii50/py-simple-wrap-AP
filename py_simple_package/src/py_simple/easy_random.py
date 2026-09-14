@@ -164,6 +164,44 @@ def shuffle_list(items: Sequence[Any]) -> list[Any]:
     return result
 
 
+def generate_password(length: int = 12, include_symbols: bool = True) -> str:
+    """
+    Generates a random password of the given length.
+
+    Args:
+        length (int): Length of the password. Defaults to 12.
+        include_symbols (bool): Whether to include symbols. Defaults to True.
+
+    Returns:
+        str: A randomly generated password.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import generate_password
+
+            password = generate_password(12)  # -> e.g. 'aB3$x9!qW2#z'
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+            import string
+
+            chars = string.ascii_letters + string.digits + string.punctuation
+            password = ''.join(random.choice(chars) for _ in range(12))
+            ```
+    """
+    import string
+
+    if length < 1:
+        raise ValueError("Password length must be at least 1.")
+    chars = string.ascii_letters + string.digits
+    if include_symbols:
+        chars += string.punctuation
+    return ''.join(random.choice(chars) for _ in range(length))
+
+
 def random_int(start: int, end: int) -> int:
     """
     Generates a random integer between start and end (inclusive).
