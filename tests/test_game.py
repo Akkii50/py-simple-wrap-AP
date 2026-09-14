@@ -14,6 +14,7 @@ from py_simple_package.src.py_simple.easy_game import (
     is_left_mouse_button_clicked,
     is_middle_mouse_button_clicked,
     is_right_mouse_button_clicked,
+    update_screen,
 )
 
 
@@ -144,6 +145,30 @@ def test_fill_background(monkeypatch):
     bad_screen = SimpleNamespace(fill=fail_fill)
     with pytest.raises(EasyGameError, match="surface error"):
         fill_background(bad_screen, (255, 0, 0))
+
+
+def test_update_screen_calls_pygame_display_flip(monkeypatch):
+    """Updating the screen should refresh the active pygame display."""
+    calls = []
+    monkeypatch.setattr(easy_game.pygame.display, "flip", lambda: calls.append("flip"))
+
+    update_screen()
+
+    assert calls == ["flip"]
+
+
+def test_update_screen_wraps_pygame_errors(monkeypatch):
+    """Display refresh failures should use the module's consistent exception."""
+
+    def fail_flip():
+        raise RuntimeError("display update failed")
+
+    monkeypatch.setattr(easy_game.pygame.display, "flip", fail_flip)
+
+    with pytest.raises(EasyGameError, match="display update failed") as exc_info:
+        update_screen()
+
+    assert exc_info.value.__cause__ is None
 
 
 def test_easy_game_error_message():

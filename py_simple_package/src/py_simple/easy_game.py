@@ -303,3 +303,35 @@ def is_key_pressed(key_name: str) -> bool:
         if isinstance(e, EasyGameError):
             raise
         raise EasyGameError(str(e)) from None
+
+
+def update_screen() -> None:
+    """
+    Updates the pygame display, saving you from remembering the
+    exact pygame display refresh call in every game loop.
+
+    Returns:
+        None
+
+    Raises:
+        EasyGameError: If pygame fails to update the display.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import update_screen
+
+            update_screen()
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import pygame
+
+            pygame.display.flip()
+            ```
+    """
+    try:
+        pygame.display.flip()
+    except Exception as e:
+        raise EasyGameError(str(e)) from None
