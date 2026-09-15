@@ -249,6 +249,12 @@ Every tile below is a real person who showed up for this project. 💛
         <sub><b>Utkarsh Arya</b></sub>
       </a>
     </td>
+    <td align="center" valign="top" width="8.6%">
+      <a href="https://github.com/ege-arhan">
+        <img src="https://github.com/ege-arhan.png" width="100px;" alt="Ege"/><br />
+        <sub><b>Ege</b></sub>
+      </a>
+    </td>
   </tr>
 </table>
 
@@ -811,6 +817,7 @@ The Module Magicians. The Code Conjurers. The Test Sentinels. The Lore Keepers. 
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/SpaceShaman"><img src="https://github.com/SpaceShaman.png?s=80" width="80px;" alt="SpaceShaman"/><br /><sub><b>SpaceShaman</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=SpaceShaman" title="Tests">🧪</a> <a href="https://github.com/sara-czasak/py_simple/commits?author=SpaceShaman" title="Docs">📖</a> <a href="https://github.com/sara-czasak/py_simple/commits?author=SpaceShaman" title="Code">💻</a> <a href="https://github.com/SpaceShaman" title="module-author">🪶</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yuktheshwarbhat"><img src="https://github.com/yuktheshwarbhat.png?s=80" width="80px;" alt="Yuktheshwarbhat"/><br /><sub><b>Yuktheshwarbhat</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=yuktheshwarbhat" title="Tests">🧪</a> <a href="https://github.com/sara-czasak/py_simple/commits?author=yuktheshwarbhat" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Utkarsh3725"><img src="https://github.com/Utkarsh3725.png?s=80" width="80px;" alt="Utkarsh Arya"/><br /><sub><b>Utkarsh Arya</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=Utkarsh3725" title="Tests">🧪</a> <a href="https://github.com/sara-czasak/py_simple/commits?author=Utkarsh3725" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ege-arhan"><img src="https://github.com/ege-arhan.png?s=80" width="80px;" alt="Ege"/><br /><sub><b>Ege</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=ege-arhan" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
