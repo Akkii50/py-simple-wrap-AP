@@ -4,6 +4,7 @@ from py_simple_package.src.py_simple.easy_stats import (
     correlation_coefficient,
     data_range,
     interquartile_range,
+    mean,
     median,
     mode,
     percentile,
@@ -11,6 +12,32 @@ from py_simple_package.src.py_simple.easy_stats import (
     variance,
     z_score,
 )
+
+
+@pytest.mark.parametrize(
+    "nums, expected",
+    [
+        ([1, 2, 3], 2.0),
+        ([1, 2, 3, 4, 5], 3.0),
+        ([10], 10.0),
+        ([1.5, 2.5, 5.0], 3.0),
+        ([-2, 0, 2], 0.0),
+        ([-10, -5], -7.5),
+    ],
+)
+def test_mean(nums, expected):
+    assert mean(nums) == expected
+
+
+def test_mean_rejects_empty_list():
+    with pytest.raises(ValueError):
+        mean([])
+
+
+def test_mean_is_exported_from_package():
+    from py_simple_package.src.py_simple import mean as exported
+
+    assert exported is mean
 
 
 @pytest.mark.parametrize(

@@ -211,6 +211,7 @@ from .easy_stats import (
     correlation_coefficient,
     data_range,
     interquartile_range,
+    mean,
     median,
     mode,
     percentile,

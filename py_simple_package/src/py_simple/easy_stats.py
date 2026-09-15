@@ -4,6 +4,39 @@ import math
 from statistics import correlation as _correlation
 
 
+def mean(nums: list[float]) -> float:
+    """
+    Returns the average (arithmetic mean) of a list of numbers.
+
+    Args:
+        nums (list[float]): List of numbers.
+
+    Returns:
+        float: The mean value.
+
+    Raises:
+        ValueError: If the list is empty.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import mean
+
+            result = mean([1, 2, 3, 4, 5])  # -> 3.0
+            ```
+
+        === "The Traditional Way"
+            ```python
+            nums = [1, 2, 3, 4, 5]
+            result = sum(nums) / len(nums)
+            ```
+    """
+    if not nums:
+        raise ValueError("Cannot find the mean of an empty list.")
+
+    return sum(nums) / len(nums)
+
+
 def median(nums: list[float]) -> float:
     """
     Returns the middle value of a list of numbers.
