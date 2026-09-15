@@ -335,7 +335,8 @@ def run_with_fallback(func, default_value, *args, **kwargs):
         return func(*args, **kwargs)
     except Exception:
         return default_value
- feat/add-run-with-delay
+
+
 def run_with_delay(delay: float | int, func, *args, **kwargs):
     """
     Waits for a specified number of seconds before executing a function
@@ -368,4 +369,3 @@ def run_with_delay(delay: float | int, func, *args, **kwargs):
     """
     time.sleep(delay)
     return func(*args, **kwargs)
- main
