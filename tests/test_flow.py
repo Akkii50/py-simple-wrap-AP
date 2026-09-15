@@ -11,6 +11,7 @@ from py_simple_package.src.py_simple.easy_flow import (
     run_py_file_safe,
     run_py_string,
     run_with_fallback,
+    run_with_delay,
     time_function_call,
     time_it,
 )
@@ -284,9 +285,7 @@ class TestRetry:
 def test_run_with_fallback():
     assert run_with_fallback(int, 0, "invalid") == 0
     assert run_with_fallback(int, 0, "42") == 42
- feat/add-run-with-delay
 
-from py_simple.easy_flow import run_with_delay
 
 def test_run_with_delay():
     def sample_add(a, b):
@@ -295,5 +294,3 @@ def test_run_with_delay():
     # Test that it successfully runs after a tiny delay and returns correct math
     result = run_with_delay(0.01, sample_add, 5, 5)
     assert result == 10
-
- main
