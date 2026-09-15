@@ -182,6 +182,7 @@ from .easy_numbers import (
 )
 from .easy_random import (
     flip_coin,
+    generate_password,
     pick_random_item,
     pick_random_items,
     random_int,
