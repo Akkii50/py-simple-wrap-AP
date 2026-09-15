@@ -8,6 +8,7 @@ example with logging.basicConfig(level=logging.INFO).
 """
 
 import logging
+import os
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from functools import wraps
