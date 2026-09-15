@@ -231,3 +231,30 @@ def random_int(start: int, end: int) -> int:
     if start > end:
         raise ValueError("start cannot be greater than end.")
     return random.randint(start, end)
+
+
+def random_bool() -> bool:
+    """
+    Returns a random boolean value (`True` or `False`) with equal probability.
+
+    Returns:
+        bool: Either `True` or `False`.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import random_bool
+
+            if random_bool():
+                print("Lucky!")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            if random.choice([True, False]):
+                print("Lucky!")
+            ```
+    """
+    return random.choice([True, False])

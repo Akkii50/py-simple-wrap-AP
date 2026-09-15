@@ -7,6 +7,7 @@ from py_simple_package.src.py_simple.easy_random import (
     flip_coin,
     pick_random_item,
     pick_random_items,
+    random_bool,
     random_int,
     roll_dice,
     shuffle_list,
@@ -79,3 +80,19 @@ def test_random_int():
 
     with pytest.raises(ValueError):
         random_int(10, 5)
+
+
+def test_random_bool(monkeypatch):
+    assert isinstance(random_bool(), bool)
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choice",
+        lambda seq: True,
+    )
+    assert random_bool() is True
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choice",
+        lambda seq: False,
+    )
+    assert random_bool() is False

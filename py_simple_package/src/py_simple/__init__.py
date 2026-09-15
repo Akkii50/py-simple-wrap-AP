@@ -185,6 +185,7 @@ from .easy_random import (
     generate_password,
     pick_random_item,
     pick_random_items,
+    random_bool,
     random_int,
     roll_dice,
     shuffle_list,
