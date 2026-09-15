@@ -4,7 +4,9 @@ import logging
 
 import pytest
 
-from py_simple_package.src.py_simple.easy_logging import log_function, log_step
+import os
+
+from py_simple_package.src.py_simple.easy_logging import log_function, log_step, clear_log_file
 
 
 def test_log_step_logs_start_and_finish(caplog):
@@ -99,3 +101,20 @@ def test_log_function_missing_message_field_does_not_run_function(caplog):
 
     assert calls == []
     assert caplog.messages == []
+
+def test_clear_log_file_empties_existing_file(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("line one\nline two\n")
+
+    result = clear_log_file(str(log_file))
+
+    assert result is True
+    assert log_file.read_text() == ""
+
+
+def test_clear_log_file_returns_false_when_missing(tmp_path):
+    missing_file = tmp_path / "does_not_exist.log"
+
+    result = clear_log_file(str(missing_file))
+
+    assert result is False
