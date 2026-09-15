@@ -261,6 +261,12 @@ Every tile below is a real person who showed up for this project. 💛
         <sub><b>Erol Tasci</b></sub>
       </a>
     </td>
+    <td align="center" valign="top" width="8.6%">
+      <a href="https://github.com/NANDINI-7777">
+        <img src="https://github.com/NANDINI-7777.png" width="100px;" alt="Nandini Soni"/><br />
+        <sub><b>Nandini Soni</b></sub>
+      </a>
+    </td>
   </tr>
 </table>
 
@@ -509,6 +515,12 @@ Every tile below is a real person who showed up for this project. 💛
       <a href="https://github.com/Voyagerroc-Lab">
         <img src="https://github.com/Voyagerroc-Lab.png" width="100px;" alt="Erol Tasci"/><br />
         <sub><b>Erol Tasci</b></sub>
+      </a>
+    </td>
+    <td align="center" valign="top" width="8.6%">
+      <a href="https://github.com/NANDINI-7777">
+        <img src="https://github.com/NANDINI-7777.png" width="100px;" alt="Nandini Soni"/><br />
+        <sub><b>Nandini Soni</b></sub>
       </a>
     </td>
   </tr>
@@ -831,6 +843,7 @@ The Module Magicians. The Code Conjurers. The Test Sentinels. The Lore Keepers. 
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Utkarsh3725"><img src="https://github.com/Utkarsh3725.png?s=80" width="80px;" alt="Utkarsh Arya"/><br /><sub><b>Utkarsh Arya</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=Utkarsh3725" title="Tests">🧪</a> <a href="https://github.com/sara-czasak/py_simple/commits?author=Utkarsh3725" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ege-arhan"><img src="https://github.com/ege-arhan.png?s=80" width="80px;" alt="Ege"/><br /><sub><b>Ege</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=ege-arhan" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Voyagerroc-Lab"><img src="https://github.com/Voyagerroc-Lab.png?s=80" width="80px;" alt="Erol Tasci"/><br /><sub><b>Erol Tasci</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=Voyagerroc-Lab" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/NANDINI-7777"><img src="https://github.com/NANDINI-7777.png?s=80" width="80px;" alt="Nandini Soni"/><br /><sub><b>Nandini Soni</b></sub></a><br /><a href="https://github.com/sara-czasak/py_simple/commits?author=NANDINI-7777" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
