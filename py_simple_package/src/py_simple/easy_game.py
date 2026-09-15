@@ -5,7 +5,6 @@ building games.
 
 import pygame
 
-
 ALLOWED_KEYS = [i for i in dir(pygame) if i.startswith("K_")]
 
 
@@ -21,6 +20,7 @@ class EasyGameError(Exception):
     Args:
         message (str): Human-readable description of what went wrong.
     """
+
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)
@@ -302,4 +302,36 @@ def is_key_pressed(key_name: str) -> bool:
     except Exception as e:
         if isinstance(e, EasyGameError):
             raise
+        raise EasyGameError(str(e)) from None
+
+
+def update_screen() -> None:
+    """
+    Updates the pygame display, saving you from remembering the
+    exact pygame display refresh call in every game loop.
+
+    Returns:
+        None
+
+    Raises:
+        EasyGameError: If pygame fails to update the display.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import update_screen
+
+            update_screen()
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import pygame
+
+            pygame.display.flip()
+            ```
+    """
+    try:
+        pygame.display.flip()
+    except Exception as e:
         raise EasyGameError(str(e)) from None

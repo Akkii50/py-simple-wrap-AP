@@ -9,14 +9,33 @@ from py_simple_package.src.py_simple.easy_flow import (
     retry,
     run_py_file,
     run_py_file_safe,
+    run_py_string,
     run_with_fallback,
     time_function_call,
     time_it,
 )
 
 
-class TestEasyFlowError:
+class TestRunPyString:
+    @pytest.mark.parametrize(
+        "code_string,expected_output",
+        [
+            ("print('hello world')", "hello world\n"),
+            ("a = 1 + 1\nprint(a)", "2\n"),
+        ],
+    )
+    def test_runs_successfully(self, capsys, code_string, expected_output):
+        run_py_string(code_string)
+        captured = capsys.readouterr()
+        assert captured.out == expected_output
 
+    def test_script_error_raises(self):
+        with pytest.raises(EasyFlowError) as exc_info:
+            run_py_string("raise ValueError('boom')")
+        assert "boom" in str(exc_info.value)
+
+
+class TestEasyFlowError:
     def test_is_exception(self):
         """Tests if it is an exception."""
         assert issubclass(EasyFlowError, Exception)
@@ -265,6 +284,7 @@ class TestRetry:
 def test_run_with_fallback():
     assert run_with_fallback(int, 0, "invalid") == 0
     assert run_with_fallback(int, 0, "42") == 42
+ feat/add-run-with-delay
 
 from py_simple.easy_flow import run_with_delay
 
@@ -275,3 +295,5 @@ def test_run_with_delay():
     # Test that it successfully runs after a tiny delay and returns correct math
     result = run_with_delay(0.01, sample_add, 5, 5)
     assert result == 10
+
+ main

@@ -1,10 +1,16 @@
 import pytest
-from py_simple.easy_random import (
-    roll_dice,
+
+from py_simple_package.src.py_simple import (
+    pick_random_items as public_pick_random_items,
+)
+from py_simple_package.src.py_simple.easy_random import (
     flip_coin,
     pick_random_item,
-    shuffle_list,
+    pick_random_items,
+    random_bool,
     random_int,
+    roll_dice,
+    shuffle_list,
 )
 
 
@@ -31,14 +37,41 @@ def test_pick_random_item():
         pick_random_item([])
 
 
+def test_pick_random_items(monkeypatch):
+    items = ["Ada", "Lin", "Sam"]
+    received = {}
+
+    def fake_sample(population, k):
+        received.update(population=population, count=k)
+        return list(population)[:k]
+
+    monkeypatch.setattr("py_simple.easy_random.random.sample", fake_sample)
+
+    assert pick_random_items(items, 2) == ["Ada", "Lin"]
+    assert received == {"population": items, "count": 2}
+    assert items == ["Ada", "Lin", "Sam"]
+    assert pick_random_items(items, 0) == []
+
+
+@pytest.mark.parametrize("count", [-1, 4, 1.5, True])
+def test_pick_random_items_rejects_invalid_count(count):
+    with pytest.raises(ValueError, match="count must be"):
+        pick_random_items(["Ada", "Lin", "Sam"], count)
+
+
+def test_pick_random_items_is_available_from_public_api():
+    assert public_pick_random_items is pick_random_items
+
+
 def test_shuffle_list():
     original = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     shuffled = shuffle_list(original)
     assert len(shuffled) == len(original)
     assert set(shuffled) == set(original)
     assert original == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
+
     assert shuffle_list([]) == []
+
 
 def test_random_int():
     for _ in range(50):
@@ -47,3 +80,19 @@ def test_random_int():
 
     with pytest.raises(ValueError):
         random_int(10, 5)
+
+
+def test_random_bool(monkeypatch):
+    assert isinstance(random_bool(), bool)
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choice",
+        lambda seq: True,
+    )
+    assert random_bool() is True
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choice",
+        lambda seq: False,
+    )
+    assert random_bool() is False

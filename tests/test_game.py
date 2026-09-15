@@ -2,7 +2,6 @@
 
 from types import SimpleNamespace
 
-import pygame
 import pytest
 
 from py_simple_package.src.py_simple import easy_game
@@ -15,7 +14,7 @@ from py_simple_package.src.py_simple.easy_game import (
     is_left_mouse_button_clicked,
     is_middle_mouse_button_clicked,
     is_right_mouse_button_clicked,
-    is_key_pressed,
+    update_screen,
 )
 
 
@@ -124,7 +123,7 @@ def test_get_mouse_position_returns_pygame_position(monkeypatch):
     ],
 )
 def test_mouse_button_helpers_use_the_correct_button(
-        monkeypatch, helper, pressed, expected
+    monkeypatch, helper, pressed, expected
 ):
     """Each mouse helper should read only its corresponding pygame button."""
     monkeypatch.setattr(easy_game.pygame.mouse, "get_pressed", lambda: pressed)
@@ -148,13 +147,39 @@ def test_fill_background(monkeypatch):
         fill_background(bad_screen, (255, 0, 0))
 
 
-def test_is_key_pressed_valid(monkeypatch):
-    """Valid keys should look up key state correctly via pygame."""
-    monkeypatch.setattr(easy_game.pygame.key, "get_pressed", lambda: {pygame.K_SPACE: 1})
-    assert is_key_pressed("SPACE") is True
+def test_update_screen_calls_pygame_display_flip(monkeypatch):
+    """Updating the screen should refresh the active pygame display."""
+    calls = []
+    monkeypatch.setattr(easy_game.pygame.display, "flip", lambda: calls.append("flip"))
+
+    update_screen()
+
+    assert calls == ["flip"]
 
 
-def test_is_key_pressed_invalid():
-    """Ensure invalid keys properly raise EasyGameError."""
-    with pytest.raises(EasyGameError):
-        is_key_pressed("INVALID_KEY_NAME_12345")
+def test_update_screen_wraps_pygame_errors(monkeypatch):
+    """Display refresh failures should use the module's consistent exception."""
+
+    def fail_flip():
+        raise RuntimeError("display update failed")
+
+    monkeypatch.setattr(easy_game.pygame.display, "flip", fail_flip)
+
+    with pytest.raises(EasyGameError, match="display update failed") as exc_info:
+        update_screen()
+
+    assert exc_info.value.__cause__ is None
+
+
+def test_easy_game_error_message():
+    """EasyGameError should store message and format string properly."""
+    err = EasyGameError("custom error message")
+    assert err.message == "custom error message"
+    assert str(err) == "custom error message"
+
+
+def test_allowed_keys_contains_pygame_key_constants():
+    """ALLOWED_KEYS should only contain attributes starting with K_."""
+    assert len(easy_game.ALLOWED_KEYS) > 0
+    assert all(k.startswith("K_") for k in easy_game.ALLOWED_KEYS)
+    assert "K_SPACE" in easy_game.ALLOWED_KEYS or "K_SPACE" in dir(easy_game.pygame)

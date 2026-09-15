@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_simple_wrap"
-version = "0.4.1"
+version = "0.5.0"
 authors = [
   { name="Sara Czasak", email="sara.p.czasak.m@gmail.com" },
 ]
@@ -61,6 +61,7 @@ Documentation = "https://sara-czasak.github.io/py-simple-wrap/docs/"
 Quickstart = "https://github.com/sara-czasak/py-simple-wrap/blob/main/QUICKSTART.md"
 
 [project.optional-dependencies]
+
 test = [
     "pytest>=7.0",
 ]
@@ -81,6 +82,7 @@ python_files = "test_*.py"
 addopts = "-v --tb=short"
 filterwarnings = [
     "ignore::DeprecationWarning",
+
 ]
 
 [tool.setuptools]
@@ -88,3 +90,7 @@ include-package-data = true
 
 [tool.setuptools.package-data]
 "*" = ["docs/*.md", "config_templates/*.yml"]
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "F403", "F405", "F401", "E721"]

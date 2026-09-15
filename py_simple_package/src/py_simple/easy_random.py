@@ -3,7 +3,8 @@ easy_random is built to simplify common random choices, numbers, and shuffling.
 """
 
 import random
-from typing import Any, Sequence, List
+from collections.abc import Sequence
+from typing import Any
 
 
 def roll_dice(sides: int = 6) -> int:
@@ -91,7 +92,47 @@ def pick_random_item(items: Sequence[Any]) -> Any:
     return random.choice(items)
 
 
-def shuffle_list(items: Sequence[Any]) -> List[Any]:
+def pick_random_items(items: Sequence[Any], count: int) -> list[Any]:
+    """
+    Picks several unique positions from a list or tuple without changing it.
+
+    Args:
+        items (Sequence[Any]): The collection to pick from.
+        count (int): Number of items to pick.
+
+    Returns:
+        List[Any]: A new list containing the selected items.
+
+    Raises:
+        ValueError: If count is not a whole number from zero through the
+            number of available items.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import pick_random_items
+
+            winners = pick_random_items(["Ada", "Lin", "Sam"], 2)
+            # -> e.g. ['Lin', 'Ada']
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            winners = random.sample(["Ada", "Lin", "Sam"], k=2)
+            ```
+    """
+    if not isinstance(count, int) or isinstance(count, bool):
+        raise ValueError("count must be a whole number.")
+    if count < 0 or count > len(items):
+        raise ValueError(
+            f"count must be between 0 and the number of items ({len(items)})."
+        )
+    return random.sample(items, k=count)
+
+
+def shuffle_list(items: Sequence[Any]) -> list[Any]:
     """
     Returns a new list with the items shuffled in random order.
 
@@ -123,6 +164,44 @@ def shuffle_list(items: Sequence[Any]) -> List[Any]:
     return result
 
 
+def generate_password(length: int = 12, include_symbols: bool = True) -> str:
+    """
+    Generates a random password of the given length.
+
+    Args:
+        length (int): Length of the password. Defaults to 12.
+        include_symbols (bool): Whether to include symbols. Defaults to True.
+
+    Returns:
+        str: A randomly generated password.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import generate_password
+
+            password = generate_password(12)  # -> e.g. 'aB3$x9!qW2#z'
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+            import string
+
+            chars = string.ascii_letters + string.digits + string.punctuation
+            password = ''.join(random.choice(chars) for _ in range(12))
+            ```
+    """
+    import string
+
+    if length < 1:
+        raise ValueError("Password length must be at least 1.")
+    chars = string.ascii_letters + string.digits
+    if include_symbols:
+        chars += string.punctuation
+    return ''.join(random.choice(chars) for _ in range(length))
+
+
 def random_int(start: int, end: int) -> int:
     """
     Generates a random integer between start and end (inclusive).
@@ -152,3 +231,30 @@ def random_int(start: int, end: int) -> int:
     if start > end:
         raise ValueError("start cannot be greater than end.")
     return random.randint(start, end)
+
+
+def random_bool() -> bool:
+    """
+    Returns a random boolean value (`True` or `False`) with equal probability.
+
+    Returns:
+        bool: Either `True` or `False`.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import random_bool
+
+            if random_bool():
+                print("Lucky!")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            if random.choice([True, False]):
+                print("Lucky!")
+            ```
+    """
+    return random.choice([True, False])
