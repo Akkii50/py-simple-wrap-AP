@@ -335,3 +335,37 @@ def run_with_fallback(func, default_value, *args, **kwargs):
         return func(*args, **kwargs)
     except Exception:
         return default_value
+
+
+def run_with_delay(delay: float | int, func, *args, **kwargs):
+    """
+    Waits for a specified number of seconds before executing a function
+    and returning its result.
+
+    Args:
+        delay (int or float): Time to wait in seconds before running the function.
+        func (callable): The function to execute.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        Any: The return value of `func`.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import run_with_delay
+
+            result = run_with_delay(1, print, "Hello after 1 second!")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import time
+
+            time.sleep(1)
+            result = print("Hello after 1 second!")
+            ```
+    """
+    time.sleep(delay)
+    return func(*args, **kwargs)
