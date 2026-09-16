@@ -177,20 +177,26 @@ def log_function(
 
     return decorator
 
-def clear_log_file(file_path):
+def clear_log_file(file_path: str) -> bool:
     """
-    Empty out a log file, leaving it in place but with no contents.
+    Empties a log file, leaving it in place but with no contents.
     Args:
         file_path (str): Path to the log file to clear.
     Returns:
         bool: True if the file was cleared successfully, False if the
-            file could not be found.
+            file could not be found (e.g., False when the path doesn't exist).
     Example:
-        Py_simple Way:
-            from py_simple.easy_logging import clear_log_file
+        === "The Py_simple Way"
+            ```python
+            from py_simple import clear_log_file
             clear_log_file("app.log")
-        Traditional Way:
-            open("app.log", "w").close()
+            ```
+        === "The Traditional Way"
+            ```python
+            import os
+            if os.path.exists("app.log"):
+                open("app.log", "w").close()
+            ```
     """
     if not os.path.exists(file_path):
         return False
