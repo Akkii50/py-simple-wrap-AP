@@ -8,6 +8,7 @@ example with logging.basicConfig(level=logging.INFO).
 """
 
 import logging
+import os
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from functools import wraps
@@ -175,3 +176,32 @@ def log_function(
         return wrapper
 
     return decorator
+
+def clear_log_file(file_path: str) -> bool:
+    """
+    Empties a log file, leaving it in place but with no contents.
+    Args:
+        file_path (str): Path to the log file to clear.
+    Returns:
+        bool: True if the file was cleared successfully, False if the
+            file could not be found (e.g., False when the path doesn't exist).
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import clear_log_file
+            clear_log_file("app.log")
+            ```
+        === "The Traditional Way"
+            ```python
+            import os
+            if os.path.exists("app.log"):
+                open("app.log", "w").close()
+            ```
+    """
+    if not os.path.exists(file_path):
+        return False
+
+    with open(file_path, "w"):
+        pass
+
+    return True
