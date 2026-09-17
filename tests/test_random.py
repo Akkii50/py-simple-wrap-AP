@@ -1,3 +1,5 @@
+import string
+
 import pytest
 
 from py_simple_package.src.py_simple import (
@@ -5,6 +7,7 @@ from py_simple_package.src.py_simple import (
 )
 from py_simple_package.src.py_simple.easy_random import (
     flip_coin,
+    generate_password,
     pick_random_item,
     pick_random_items,
     random_bool,
@@ -96,3 +99,101 @@ def test_random_bool(monkeypatch):
         lambda seq: False,
     )
     assert random_bool() is False
+
+def test_roll_dice_default_sides():
+    for _ in range(40):
+        result = roll_dice()
+        assert 1 <= result <= 6
+
+
+def test_roll_dice_custom_sides():
+    for _ in range(40):
+        result = roll_dice(20)
+        assert 1 <= result <= 20
+
+
+def test_roll_dice_single_side():
+    assert roll_dice(1) == 1
+
+
+def test_roll_dice_rejects_invalid_sides():
+    with pytest.raises(ValueError, match="at least 1 side"):
+        roll_dice(0)
+    with pytest.raises(ValueError, match="at least 1 side"):
+        roll_dice(-3)
+
+
+def test_pick_random_item_from_list_and_tuple():
+    items = ["apple", "banana", "cherry"]
+    for _ in range(20):
+        assert pick_random_item(items) in items
+    for _ in range(20):
+        assert pick_random_item(tuple(items)) in items
+
+
+def test_pick_random_items_count_boundaries():
+    items = ["Ada", "Lin", "Sam"]
+    assert pick_random_items(items, 0) == []
+    full = pick_random_items(items, 3)
+    assert sorted(full) == sorted(items)
+    two = pick_random_items(items, 2)
+    assert len(two) == 2
+    assert len(set(two)) == 2
+    assert set(two).issubset(set(items))
+    assert items == ["Ada", "Lin", "Sam"]
+
+
+def test_shuffle_list_returns_new_list_with_same_items():
+    original = [1, 2, 3, 4, 5]
+    shuffled = shuffle_list(original)
+    assert shuffled is not original
+    assert sorted(shuffled) == original
+    assert original == [1, 2, 3, 4, 5]
+
+
+def test_shuffle_list_accepts_tuple_and_empty():
+    assert shuffle_list([]) == []
+    source = ("a", "b", "c")
+    shuffled = shuffle_list(source)
+    assert sorted(shuffled) == ["a", "b", "c"]
+    assert source == ("a", "b", "c")
+
+
+def test_generate_password_default_length_and_charset():
+    password = generate_password()
+    assert len(password) == 12
+    allowed = set(string.ascii_letters + string.digits + string.punctuation)
+    assert set(password).issubset(allowed)
+
+
+def test_generate_password_without_symbols():
+    allowed = set(string.ascii_letters + string.digits)
+    for length in (1, 8, 16):
+        password = generate_password(length, include_symbols=False)
+        assert len(password) == length
+        assert set(password).issubset(allowed)
+        assert not set(password).intersection(string.punctuation)
+
+
+def test_generate_password_with_symbols(monkeypatch):
+    sequence = iter("aB3$x9")
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choice",
+        lambda chars: next(sequence),
+    )
+    assert generate_password(6, include_symbols=True) == "aB3$x9"
+
+
+def test_generate_password_rejects_invalid_length():
+    with pytest.raises(ValueError, match="at least 1"):
+        generate_password(0)
+    with pytest.raises(ValueError, match="at least 1"):
+        generate_password(-2)
+
+
+def test_random_int_inclusive_range():
+    for _ in range(40):
+        value = random_int(5, 15)
+        assert 5 <= value <= 15
+    assert random_int(7, 7) == 7
+
