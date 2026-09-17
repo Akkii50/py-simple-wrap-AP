@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.1] - 2026-09-17
+### Fixed
+- Cleaned up a stray leftover table row in the README's module grid ([@sara-czasak](https://github.com/sara-czasak))
+- Fixed the "😰 → 😎 See the difference" heading rendering as literal `## ` text instead of a heading — it immediately followed a `<br>` HTML tag with no blank line between them, which breaks Markdown heading parsing on GitHub ([@sara-czasak](https://github.com/sara-czasak))
+
 ## [0.6.0] - 2026-09-17
 ### Added
 - Migrated the project from Poetry/pip to `uv` for dependency management, with `astral-sh/setup-uv` wired into CI and both `uv sync`/`uv run` and a plain `pip install -e .[test,docs]` path documented in `CONTRIBUTING.md`, including local MkDocs preview instructions ([@Yuvrajup](https://github.com/Yuvrajup))
