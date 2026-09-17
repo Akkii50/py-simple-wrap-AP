@@ -235,7 +235,7 @@ def extract_hashtags(text: str) -> list:
     Example:
         === "The Py_simple Way"
             ```python
-            from py_simple import extract_hashtags
+            from py_simple.easy_regex import extract_hashtags
 
             result = extract_hashtags("Loving #Python and #OpenSource!")
             # -> ['#Python', '#OpenSource']

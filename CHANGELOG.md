@@ -9,6 +9,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-09-17
+### Added
+- Migrated the project from Poetry/pip to `uv` for dependency management, with `astral-sh/setup-uv` wired into CI and both `uv sync`/`uv run` and a plain `pip install -e .[test,docs]` path documented in `CONTRIBUTING.md`, including local MkDocs preview instructions ([@Yuvrajup](https://github.com/Yuvrajup))
+- Added the `easy_logging` module (`log_step`, `log_function`) to the public API, plus `clear_log_file` for emptying a log file's contents ([@sara-czasak](https://github.com/sara-czasak), [@dave123981](https://github.com/dave123981))
+- Added `mean` and `correlation_coefficient` (Pearson) to `easy_stats` ([@Voyagerroc-Lab](https://github.com/Voyagerroc-Lab), [@9anna-na](https://github.com/9anna-na))
+- Added `random_bool` to `easy_random`, along with a simple `generate_simple_password` helper — named to avoid colliding with the existing, cryptographically-secure `easy_generator.generate_password` ([@ege-arhan](https://github.com/ege-arhan), [@NANDINI-7777](https://github.com/NANDINI-7777))
+- Added `update_screen` and `fill_background` to `easy_game`'s public API. `is_key_pressed` was also added to the module but isn't exported yet — it doesn't have test coverage, so it's reachable via `from py_simple.easy_game import is_key_pressed` directly for now ([@Utkarsh3725](https://github.com/Utkarsh3725), [@VidyavathiGK](https://github.com/VidyavathiGK))
+- Added `run_with_delay` and `run_with_fallback` to `easy_flow` ([@VidyavathiGK](https://github.com/VidyavathiGK))
+- Added 11 new functions to `easy_math` (`is_armstrong_number`, `is_triangular_number`, `is_harshad_number`, `digit_count`, `reverse_digits`, `is_abundant_number`, `distance_between_points`, `midpoint`, `sum_of_squares`, `calculate_simple_interest`, `collatz_sequence`) ([@Yuktheshwarbhat](https://github.com/Yuktheshwarbhat))
+- Added `extract_mentions` and `clean_extra_whitespace` to `easy_regex`'s public API. `extract_hashtags` was also added to the module, but isn't exported — it collides with the existing `easy_text.extract_hashtags`, so it stays reachable via `from py_simple.easy_regex import extract_hashtags` directly ([@Yuktheshwarbhat](https://github.com/Yuktheshwarbhat))
+- Added a "Share what you build" section and a `#py-simple-wrap` mention to the README ([@sara-czasak](https://github.com/sara-czasak))
+- Added a "Smart Web Contact Scraper" project-based tutorial ([@Yuktheshwarbhat](https://github.com/Yuktheshwarbhat))
+
+### Fixed
+- Fixed the `away_status.yml` workflow, which was missing a checkout step and failing on every run ([@sara-czasak](https://github.com/sara-czasak))
+- Fixed a Codecov coverage gap in `easy_regex` ([@gaoharimran29-glitch](https://github.com/gaoharimran29-glitch))
+- Brought `easy_ai` to full test coverage by adding tests for `EasyAgent` and the remaining `get_model` provider branches ([@Yuvrajup](https://github.com/Yuvrajup))
+- Removed a duplicate `tests/test_easy_random.py`, consolidating its unique coverage into the existing `tests/test_random.py` ([@HarshRajSinghania](https://github.com/HarshRajSinghania))
+
 ## [0.5.0] - 2026-09-08
 ### Added
 - `easy_ai`'s `get_model`, `ask_ai`, `summarize_text`, and `translate_text` are now part of the public API (`from py_simple import ...`), for connecting to OpenAI, Ollama, Anthropic, Google, and Mistral chat models without hand-rolling each provider's SDK setup, with full test coverage, a reference page, and a tutorial. The `EasyAgent` class is still work-in-progress and not exported ([@VidyavathiGK](https://github.com/VidyavathiGK), [@Larslllllll](https://github.com/Larslllllll), [@Ctrl-Yam](https://github.com/Ctrl-Yam), [@sara-czasak](https://github.com/sara-czasak))

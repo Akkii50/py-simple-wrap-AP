@@ -107,12 +107,16 @@ from .easy_flow import (
     retry,
     run_py_file,
     run_py_file_safe,
+    run_py_string,
+    run_with_delay,
+    run_with_fallback,
     time_function_call,
     time_it,
 )
 from .easy_game import (
     basic_game_setup,
     check_if_quit,
+    fill_background,
     get_mouse_position,
     is_left_mouse_button_clicked,
     is_middle_mouse_button_clicked,
@@ -157,15 +161,30 @@ from .easy_lists import (
     sum_all,
     unique_items,
 )
-from .easy_logging import log_function, log_step
+from .easy_logging import (
+    clear_log_file,
+    log_function,
+    log_step
+)
 from .easy_math import (
+    calculate_simple_interest,
+    collatz_sequence,
+    digit_count,
+    distance_between_points,
     divisors,
     factorial,
     fibonacci,
     get_least_common_multiple,
+    is_abundant_number,
+    is_armstrong_number,
+    is_harshad_number,
     is_perfect_square,
+    is_triangular_number,
+    midpoint,
     prime_factorization,
+    reverse_digits,
     sum_of_digits,
+    sum_of_squares,
 )
 from .easy_numbers import (
     average,
@@ -182,7 +201,7 @@ from .easy_numbers import (
 )
 from .easy_random import (
     flip_coin,
-    generate_password,
+    generate_simple_password,
     pick_random_item,
     pick_random_items,
     random_bool,
@@ -191,8 +210,10 @@ from .easy_random import (
     shuffle_list,
 )
 from .easy_regex import (
+    clean_extra_whitespace,
     extract_emails,
     extract_hex_colors,
+    extract_mentions,
     extract_number_sequences,
     extract_numbers,
     extract_urls,

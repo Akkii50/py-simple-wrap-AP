@@ -46,6 +46,8 @@
 | 🕰️ Easy Date Formatter | readable dates without memorizing strftime codes                              | [Docs](https://sara-czasak.github.io/py-simple-wrap/docs/reference/easy_date_formatter/) · [Tutorial](https://sara-czasak.github.io/py-simple-wrap/docs/tutorial/easy_date_formatter/) |
 | 🔄 Easy Flow            | running scripts, timing, and retries without the boilerplate                  |           [Docs](https://sara-czasak.github.io/py-simple-wrap/docs/reference/easy_flow/) · [Tutorial](https://sara-czasak.github.io/py-simple-wrap/docs/tutorial/easy_flow/)           |
 | ⚡ Easy Async            | run multiple functions at once without touching `ThreadPoolExecutor` directly |          [Docs](https://sara-czasak.github.io/py-simple-wrap/docs/reference/easy_async/) · [Tutorial](https://sara-czasak.github.io/py-simple-wrap/docs/tutorial/easy_async/)          |
+| 🪵 Easy Logging         | start/success/error logging around code blocks and function calls without repeating try/except | [Docs](https://sara-czasak.github.io/py-simple-wrap/docs/reference/easy_logging/) · [Tutorial](https://sara-czasak.github.io/py-simple-wrap/docs/tutorial/easy_logging/) |
+
 
 ## Web & visuals
 

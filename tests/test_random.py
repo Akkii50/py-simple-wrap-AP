@@ -7,7 +7,7 @@ from py_simple_package.src.py_simple import (
 )
 from py_simple_package.src.py_simple.easy_random import (
     flip_coin,
-    generate_password,
+    generate_simple_password,
     pick_random_item,
     pick_random_items,
     random_bool,
@@ -159,36 +159,36 @@ def test_shuffle_list_accepts_tuple_and_empty():
     assert source == ("a", "b", "c")
 
 
-def test_generate_password_default_length_and_charset():
-    password = generate_password()
+def test_generate_simple_password_default_length_and_charset():
+    password = generate_simple_password()
     assert len(password) == 12
     allowed = set(string.ascii_letters + string.digits + string.punctuation)
     assert set(password).issubset(allowed)
 
 
-def test_generate_password_without_symbols():
+def test_generate_simple_password_without_symbols():
     allowed = set(string.ascii_letters + string.digits)
     for length in (1, 8, 16):
-        password = generate_password(length, include_symbols=False)
+        password = generate_simple_password(length, include_symbols=False)
         assert len(password) == length
         assert set(password).issubset(allowed)
         assert not set(password).intersection(string.punctuation)
 
 
-def test_generate_password_with_symbols(monkeypatch):
+def test_generate_simple_password_with_symbols(monkeypatch):
     sequence = iter("aB3$x9")
     monkeypatch.setattr(
         "py_simple_package.src.py_simple.easy_random.random.choice",
         lambda chars: next(sequence),
     )
-    assert generate_password(6, include_symbols=True) == "aB3$x9"
+    assert generate_simple_password(6, include_symbols=True) == "aB3$x9"
 
 
-def test_generate_password_rejects_invalid_length():
+def test__simple_rejects_invalid_length():
     with pytest.raises(ValueError, match="at least 1"):
-        generate_password(0)
+        generate_simple_password(0)
     with pytest.raises(ValueError, match="at least 1"):
-        generate_password(-2)
+        generate_simple_password(-2)
 
 
 def test_random_int_inclusive_range():

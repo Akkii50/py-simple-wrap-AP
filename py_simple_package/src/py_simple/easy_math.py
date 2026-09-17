@@ -388,7 +388,7 @@ def is_harshad_number(n: int) -> bool:
     return n % digit_sum == 0
 
 
-def count_digits(n: int) -> int:
+def digit_count(n: int) -> int:
     """
     Returns the total number of digits in an integer.
 
@@ -406,9 +406,9 @@ def count_digits(n: int) -> int:
     Example:
         === "The Py_simple Way"
             ```python
-            from py_simple import count_digits
+            from py_simple import digit_count
 
-            result = count_digits(-1234)  # -> 4
+            result = digit_count(-1234)  # -> 4
             ```
 
         === "The Traditional Way"

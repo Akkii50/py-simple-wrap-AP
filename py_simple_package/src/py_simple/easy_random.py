@@ -164,7 +164,7 @@ def shuffle_list(items: Sequence[Any]) -> list[Any]:
     return result
 
 
-def generate_password(length: int = 12, include_symbols: bool = True) -> str:
+def generate_simple_password(length: int = 12, include_symbols: bool = True) -> str:
     """
     Generates a random password of the given length.
 
@@ -178,9 +178,9 @@ def generate_password(length: int = 12, include_symbols: bool = True) -> str:
     Example:
         === "The Py_simple Way"
             ```python
-            from py_simple import generate_password
+            from py_simple import generate_simple_password
 
-            password = generate_password(12)  # -> e.g. 'aB3$x9!qW2#z'
+            password = generate_simple_password(12)  # -> e.g. 'aB3$x9!qW2#z'
             ```
 
         === "The Traditional Way"

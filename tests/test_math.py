@@ -14,7 +14,7 @@ from py_simple_package.src.py_simple.easy_math import (
     is_armstrong_number,
     calculate_simple_interest,
     collatz_sequence,
-    count_digits,
+    digit_count,
     distance_between_points,
     is_abundant_number,
     is_harshad_number,
@@ -217,17 +217,17 @@ def test_is_harshad_number_rejects_invalid_input(n):
         is_harshad_number(n)
 
 
-# --- 3. count_digits ---
+# --- 3. digit_count ---
 @pytest.mark.parametrize(
     "n, expected", [(0, 1), (5, 1), (42, 2), (12345, 5), (-9, 1), (-1234, 4)]
 )
-def test_count_digits(n, expected):
-    assert count_digits(n) == expected
+def test_digit_count(n, expected):
+    assert digit_count(n) == expected
 
 @pytest.mark.parametrize("n", [12.34, "123", None])
-def test_count_digits_rejects_invalid_input(n):
+def test_digit_count_rejects_invalid_input(n):
     with pytest.raises(ValueError):
-        count_digits(n)
+        digit_count(n)
 
 
 # --- 4. reverse_digits ---
