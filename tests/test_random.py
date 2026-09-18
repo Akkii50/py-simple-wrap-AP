@@ -4,6 +4,7 @@ import pytest
 
 from py_simple_package.src.py_simple import (
     pick_random_items as public_pick_random_items,
+    random_float as public_random_float,
 )
 from py_simple_package.src.py_simple.easy_random import (
     flip_coin,
@@ -11,6 +12,7 @@ from py_simple_package.src.py_simple.easy_random import (
     pick_random_item,
     pick_random_items,
     random_bool,
+    random_float,
     random_int,
     roll_dice,
     shuffle_list,
@@ -196,4 +198,30 @@ def test_random_int_inclusive_range():
         value = random_int(5, 15)
         assert 5 <= value <= 15
     assert random_int(7, 7) == 7
+
+
+def test_random_float():
+    for _ in range(50):
+        val = random_float(1.5, 9.5)
+        assert 1.5 <= val <= 9.5
+
+    assert random_float(3.0, 3.0) == 3.0
+
+    with pytest.raises(ValueError, match="start cannot be greater than end"):
+        random_float(10.0, 5.0)
+
+    with pytest.raises(ValueError, match="decimals cannot be negative"):
+        random_float(1.0, 5.0, decimals=-1)
+
+
+def test_random_float_with_decimals():
+    for _ in range(30):
+        val = random_float(0.0, 10.0, decimals=2)
+        assert 0.0 <= val <= 10.0
+        assert val == round(val, 2)
+
+
+def test_random_float_is_available_from_public_api():
+    assert public_random_float is random_float
+
 

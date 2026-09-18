@@ -258,3 +258,39 @@ def random_bool() -> bool:
             ```
     """
     return random.choice([True, False])
+
+
+def random_float(start: float = 0.0, end: float = 1.0, decimals: int | None = None) -> float:
+    """
+    Generates a random float between start and end.
+
+    Args:
+        start (float): The lower bound. Defaults to 0.0.
+        end (float): The upper bound. Defaults to 1.0.
+        decimals (int | None): Number of decimal places to round to. Defaults to None (no rounding).
+
+    Returns:
+        float: A random floating-point number within [start, end].
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import random_float
+
+            num = random_float(1.5, 9.5, decimals=2)  # -> e.g. 4.82
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            num = round(random.uniform(1.5, 9.5), 2)
+            ```
+    """
+    if start > end:
+        raise ValueError("start cannot be greater than end.")
+    if decimals is not None and decimals < 0:
+        raise ValueError("decimals cannot be negative.")
+    val = random.uniform(start, end)
+    return round(val, decimals) if decimals is not None else val
+
