@@ -631,6 +631,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "Swir",
+      "name": "Wojciech",
+      "avatar_url": "https://github.com/Swir.png",
+      "profile": "https://github.com/Swir",
+      "contributions": [
+        "code",
+        "test",
+        "documentation"
+      ]
     }
   ]
 }
