@@ -254,6 +254,42 @@ def extract_hashtags(text: str) -> list:
     return re.findall(pattern, text)
 
 
+def extract_hashtag_names(text: str) -> list[str]:
+    r"""
+    Returns hashtag names without their leading hash symbols.
+
+    Names contain Unicode alphanumeric characters and underscores. A hash
+    immediately preceded by a word character or another hash is ignored.
+    Case, order, and duplicates are preserved. Punctuation ends a name;
+    combining marks are not included and text is not Unicode-normalized.
+    This is a text helper, not a social platform's hashtag validator.
+
+    Args:
+        text (str): Text to search for hashtag names.
+
+    Returns:
+        list[str]: Names without `#`, or an empty list if none are found.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple.easy_regex import extract_hashtag_names
+
+            result = extract_hashtag_names("Hello #Python #hello_world!")
+            # -> ['Python', 'hello_world']
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import re
+
+            result = re.findall(r'(?<![\w#])#(\w+)', "Hello #Python #hello_world!")
+            # -> ['Python', 'hello_world']
+            ```
+    """
+    return re.findall(r"(?<![\w#])#(\w+)", text)
+
+
 def extract_mentions(text: str) -> list:
     r"""
     Returns a list of all username mentions found in the text.
