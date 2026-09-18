@@ -328,4 +328,48 @@ def generate_otp(length: int = 4, with_letters: bool = False) -> str:
                 otp += str(secrets.randbelow(10))
         return otp
     else:
+        HEAD
         raise EasyGeneratorError("\n\n\nERROR: OTP length must be at least 4") from None
+
+        raise EasyGeneratorError("\n\n\nERROR: OTP length must be at least "
+                                 "4") from None
+
+
+def generate_username(separator: str = "-") -> str:
+    """
+    Generates a random, friendly username using a combination of a random
+    adjective, noun, and number, handling the word-pool selection in one call.
+
+    Args:
+        separator (str, optional): The character used to separate words
+            in the username. Defaults to `-`.
+
+    Returns:
+        str: A randomly generated username string (e.g., "swift-coder-42").
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import generate_username
+
+            username = generate_username(separator="_")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            adjectives = ["swift", "clever", "brave", "calm"]
+            nouns = ["coder", "hacker", "ninja", "wizard"]
+            username = f"{random.choice(adjectives)}_{random.choice(nouns)}_{random.randint(10, 99)}"
+            ```
+    """
+    adjectives = ["swift", "clever", "brave", "calm", "bright", "cool"]
+    nouns = ["coder", "hacker", "ninja", "wizard", "geek", "dev"]
+
+    adj = secrets.choice(adjectives)
+    noun = secrets.choice(nouns)
+    num = secrets.randbelow(90) + 10  # 2-digit number between 10 and 99
+
+    return f"{adj}{separator}{noun}{separator}{num}"
+ 5666893 (feat(easy_generator): add generate_username helper function and unit tests)
