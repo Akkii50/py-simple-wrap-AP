@@ -212,6 +212,7 @@ from .easy_random import (
 from .easy_regex import (
     clean_extra_whitespace,
     extract_emails,
+    extract_hashtag_names,
     extract_hex_colors,
     extract_mentions,
     extract_number_sequences,
