@@ -33,10 +33,10 @@ class EasyGeneratorError(Exception):
 
 
 def generate_password(
-    pass_length: int = 12,
-    uppercase_chars: int = 2,
-    digit_chars: int = 2,
-    special_chars: int = 2,
+        pass_length: int = 12,
+        uppercase_chars: int = 2,
+        digit_chars: int = 2,
+        special_chars: int = 2,
 ) -> str:
     """
     Generates a randomized password of a given length in one call,
@@ -152,10 +152,10 @@ def generate_slug(text: str) -> str:
             lowercased = normalized.lower()
             slug = re.sub(r"[^a-z0-9]+", "-", lowercased).strip("-")
             print(slug)
+            ```
     """
     if not isinstance(text, str):
         raise EasyGeneratorError("You need to provide a string.")
-    # Unicode Normalization Form KD (NFKD) is the most aggressive normalization form
     normalized_text = (
         unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
     )
@@ -192,7 +192,7 @@ def generate_qr_code(data_to_encode: str) -> None:
             ```python
             from py_simple import generate_qr_code
 
-            generate_qr_code("https://example.com")
+            generate_qr_code("[https://example.com](https://example.com)")
             ```
 
         === "The Traditional Way"
@@ -200,7 +200,7 @@ def generate_qr_code(data_to_encode: str) -> None:
             import qrcode
             import os
 
-            data = "https://example.com"
+            data = "[https://example.com](https://example.com)"
             img = qrcode.make(data)
 
             num = 0
@@ -251,7 +251,6 @@ def generate_uuid() -> str:
             result = str(uuid.uuid4())
             ```
     """
-
     return str(uuid.uuid4())
 
 
@@ -329,3 +328,42 @@ def generate_otp(length: int = 4, with_letters: bool = False) -> str:
         return otp
     else:
         raise EasyGeneratorError("\n\n\nERROR: OTP length must be at least 4") from None
+
+
+def generate_username(separator: str = "-") -> str:
+    """
+    Generates a random, friendly username using a combination of a random
+    adjective, noun, and number, handling the word-pool selection in one call.
+
+    Args:
+        separator (str, optional): The character used to separate words
+            in the username. Defaults to `-`.
+
+    Returns:
+        str: A randomly generated username string (e.g., "swift-coder-42").
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import generate_username
+
+            username = generate_username(separator="_")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            adjectives = ["swift", "clever", "brave", "calm"]
+            nouns = ["coder", "hacker", "ninja", "wizard"]
+            username = f"{random.choice(adjectives)}_{random.choice(nouns)}_{random.randint(10, 99)}"
+            ```
+    """
+    adjectives = ["swift", "clever", "brave", "calm", "bright", "cool"]
+    nouns = ["coder", "hacker", "ninja", "wizard", "geek", "dev"]
+
+    adj = secrets.choice(adjectives)
+    noun = secrets.choice(nouns)
+    num = secrets.randbelow(90) + 10  # 2-digit number between 10 and 99
+
+    return f"{adj}{separator}{noun}{separator}{num}"

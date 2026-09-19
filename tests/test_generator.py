@@ -227,3 +227,12 @@ def test_generate_otp_accepts_minimum_length():
 
     assert len(otp) == 4
     assert otp.isdigit()
+from py_simple.easy_generator import generate_username
+
+def test_generate_username():
+    username = generate_username()
+    assert isinstance(username, str)
+    assert len(username.split("-")) == 3
+
+    custom_username = generate_username(separator="_")
+    assert "_" in custom_username
