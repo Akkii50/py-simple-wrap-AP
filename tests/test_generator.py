@@ -11,6 +11,7 @@ from py_simple_package.src.py_simple.easy_generator import (
     generate_password,
     generate_qr_code,
     generate_slug,
+    generate_username,
     generate_uuid,
 )
 
@@ -158,6 +159,20 @@ def test_generate_qr_code_wraps_generation_error(monkeypatch):
         generate_qr_code("hello")
 
 
+def test_generate_qr_code_wraps_save_error(monkeypatch):
+    class BrokenImage:
+        def save(self, filename):
+            raise OSError(f"Cannot save {filename}")
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_generator.qrcode.make",
+        lambda data: BrokenImage(),
+    )
+
+    with pytest.raises(EasyGeneratorError, match="Cannot save qrcode0.png"):
+        generate_qr_code("hello")
+
+
 def test_generate_uuid():
     result = generate_uuid()
 
@@ -227,3 +242,42 @@ def test_generate_otp_accepts_minimum_length():
 
     assert len(otp) == 4
     assert otp.isdigit()
+
+
+def test_generate_username():
+    username = generate_username()
+    assert isinstance(username, str)
+    assert len(username.split("-")) == 3
+
+    custom_username = generate_username(separator="_")
+    assert "_" in custom_username
+
+
+def test_generate_username_uses_word_pools_and_two_digit_number(monkeypatch):
+    choices = iter(["swift", "coder"])
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_generator.secrets.choice",
+        lambda options: next(choices),
+    )
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_generator.secrets.randbelow",
+        lambda upper_bound: 7,
+    )
+
+    assert generate_username() == "swift-coder-17"
+
+
+def test_generate_username_respects_custom_separator(monkeypatch):
+    choices = iter(["bright", "dev"])
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_generator.secrets.choice",
+        lambda options: next(choices),
+    )
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_generator.secrets.randbelow",
+        lambda upper_bound: 89,
+    )
+
+    assert generate_username(separator="_") == "bright_dev_99"
