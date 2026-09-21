@@ -176,6 +176,6 @@ gets built next. **[Take the 2-minute survey →](https://docs.google.com/forms/
 
 **[Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [License](LICENSE.md)**
  
-<sub>Built for beginners, grown by 50+ contributors ✨</sub>
+<sub>Built for beginners, grown by 60+ contributors ✨</sub>
  
 </div>
