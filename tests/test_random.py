@@ -4,6 +4,8 @@ import pytest
 
 from py_simple_package.src.py_simple import (
     pick_random_items as public_pick_random_items,
+    random_date as public_random_date,
+    random_choice_weighted as public_random_choice_weighted,
     random_float as public_random_float,
 )
 from py_simple_package.src.py_simple.easy_random import (
@@ -12,11 +14,13 @@ from py_simple_package.src.py_simple.easy_random import (
     pick_random_item,
     pick_random_items,
     random_bool,
+    random_date,
     random_float,
     random_int,
     roll_dice,
     shuffle_list,
     random_color,
+    random_choice_weighted,
 )
 
 
@@ -231,4 +235,89 @@ def test_random_color():
         assert color.startswith("#")
         assert len(color) == 7
         int(color[1:], 16)
+def test_random_choice_weighted():
+    items = ["apple", "banana", "cherry"]
+    weights = [0.7, 0.2, 0.1]
 
+    for _ in range(20):
+        result = random_choice_weighted(items, weights)
+        assert result in items
+
+def test_random_choice_weighted_rejects_empty_items():
+    with pytest.raises(ValueError, match="empty sequence"):
+        random_choice_weighted([], [])
+
+def test_random_choice_weighted_rejects_mismatched_lengths():
+    with pytest.raises(ValueError, match="same length"):
+        random_choice_weighted(
+            ["apple", "banana"],
+            [0.7],
+        )
+
+def test_random_choice_weighted_uses_weights(monkeypatch):
+    received = {}
+
+    def fake_choices(items, weights, k):
+        received["items"] = items
+        received["weights"] = weights
+        received["k"] = k
+        return ["banana"]
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choices",
+        fake_choices,
+    )
+
+    result = random_choice_weighted(
+        ["apple", "banana"],
+        [0.2, 0.8],
+    )
+
+def test_random_date():
+    from datetime import date
+
+    start = date(2026, 1, 1)
+    end = date(2026, 12, 31)
+    for _ in range(50):
+        val = random_date(start, end)
+        assert start <= val <= end
+        assert isinstance(val, date)
+
+    with pytest.raises(ValueError, match="start cannot be greater than end"):
+        random_date(date(2026, 12, 31), date(2026, 1, 1))
+
+
+def test_random_date_equal_bounds():
+    from datetime import date
+
+    day = date(2026, 5, 15)
+    assert random_date(day, day) == day
+
+
+def test_random_date_inclusive_bounds(monkeypatch):
+    from datetime import date
+
+    start = date(2026, 1, 1)
+    end = date(2026, 1, 3)
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.randint",
+        lambda a, b: a,
+    )
+    assert random_date(start, end) == start
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.randint",
+        lambda a, b: b,
+    )
+    assert random_date(start, end) == end
+
+
+def test_random_date_is_available_from_public_api():
+    assert public_random_date is random_date
+    assert result == "banana"
+    assert received == {
+        "items": ["apple", "banana"],
+        "weights": [0.2, 0.8],
+        "k": 1,
+    }

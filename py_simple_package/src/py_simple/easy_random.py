@@ -4,6 +4,7 @@ easy_random is built to simplify common random choices, numbers, and shuffling.
 
 import random
 from collections.abc import Sequence
+from datetime import date
 from typing import Any
 
 
@@ -301,6 +302,33 @@ def random_color() -> str:
 
     Returns:
         str: A random hex color in the format "#RRGGBB".
+def random_date(start: date, end: date) -> date:
+    """
+    Generates a random date between start and end (inclusive).
+
+    Args:
+        start (date): The lower bound.
+        end (date): The upper bound.
+
+    Returns:
+        date: A random date within [start, end], e.g.
+            `date(2026, 7, 14)`.
+def random_choice_weighted(
+    items: Sequence[Any], weights: Sequence[float]
+) -> Any:
+    """
+    Picks one random item using the given weights.
+
+    Args:
+        items (Sequence[Any]): The collection to choose from.
+        weights (Sequence[float]): The relative probability of each item.
+
+    Returns:
+        Any: A randomly chosen element from the sequence.
+
+    Raises:
+        ValueError: If items and weights have different lengths or
+            if the sequence is empty.
 
     Example:
         === "The Py_simple Way"
@@ -308,6 +336,17 @@ def random_color() -> str:
             from py_simple import random_color
 
             color = random_color()  # -> e.g. "#3FA7B2"
+            from datetime import date
+            from py_simple import random_date
+
+            day = random_date(date(2026, 1, 1), date(2026, 12, 31))
+            from py_simple import random_choice_weighted
+
+            fruit = random_choice_weighted(
+                ["apple", "banana", "cherry"],
+                [0.7, 0.2, 0.1],
+            )
+            ```
 
         === "The Traditional Way"
             ```python
@@ -318,3 +357,29 @@ def random_color() -> str:
     """
 
     return "#{:06x}".format(random.randint(0, 0xFFFFFF))
+            from datetime import date
+
+            ordinal = random.randint(date(2026, 1, 1).toordinal(),
+                                     date(2026, 12, 31).toordinal())
+            day = date.fromordinal(ordinal)
+            ```
+    """
+    if start > end:
+        raise ValueError("start cannot be greater than end.")
+    ordinal = random.randint(start.toordinal(), end.toordinal())
+    return date.fromordinal(ordinal)
+
+
+            fruit = random.choices(
+                ["apple", "banana", "cherry"],
+                weights=[0.7, 0.2, 0.1],
+                k=1,
+            )[0]
+            ```
+    """
+    if not items:
+        raise ValueError("Cannot choose from an empty sequence.")
+    if len(items) != len(weights):
+        raise ValueError("items and weights must have the same length.")
+
+    return random.choices(items, weights=weights, k=1)[0]
