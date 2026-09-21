@@ -652,6 +652,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "hajar-benhadj",
+      "name": "Hajar Benhadj",
+      "avatar_url": "https://github.com/hajar-benhadj.png",
+      "profile": "https://github.com/hajar-benhadj",
+      "contributions": [
+        "code",
+        "test",
+        "documentation"
+      ]
     }
   ]
 }
