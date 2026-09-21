@@ -4,6 +4,7 @@ import pytest
 
 from py_simple_package.src.py_simple import (
     pick_random_items as public_pick_random_items,
+    random_date as public_random_date,
     random_float as public_random_float,
 )
 from py_simple_package.src.py_simple.easy_random import (
@@ -12,6 +13,7 @@ from py_simple_package.src.py_simple.easy_random import (
     pick_random_item,
     pick_random_items,
     random_bool,
+    random_date,
     random_float,
     random_int,
     roll_dice,
@@ -225,3 +227,45 @@ def test_random_float_is_available_from_public_api():
     assert public_random_float is random_float
 
 
+def test_random_date():
+    from datetime import date
+
+    start = date(2026, 1, 1)
+    end = date(2026, 12, 31)
+    for _ in range(50):
+        val = random_date(start, end)
+        assert start <= val <= end
+        assert isinstance(val, date)
+
+    with pytest.raises(ValueError, match="start cannot be greater than end"):
+        random_date(date(2026, 12, 31), date(2026, 1, 1))
+
+
+def test_random_date_equal_bounds():
+    from datetime import date
+
+    day = date(2026, 5, 15)
+    assert random_date(day, day) == day
+
+
+def test_random_date_inclusive_bounds(monkeypatch):
+    from datetime import date
+
+    start = date(2026, 1, 1)
+    end = date(2026, 1, 3)
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.randint",
+        lambda a, b: a,
+    )
+    assert random_date(start, end) == start
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.randint",
+        lambda a, b: b,
+    )
+    assert random_date(start, end) == end
+
+
+def test_random_date_is_available_from_public_api():
+    assert public_random_date is random_date

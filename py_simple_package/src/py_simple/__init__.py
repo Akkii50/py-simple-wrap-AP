@@ -205,6 +205,7 @@ from .easy_random import (
     pick_random_item,
     pick_random_items,
     random_bool,
+    random_date,
     random_float,
     random_int,
     roll_dice,
