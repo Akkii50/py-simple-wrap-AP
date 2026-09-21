@@ -294,3 +294,27 @@ def random_float(start: float = 0.0, end: float = 1.0, decimals: int | None = No
     val = random.uniform(start, end)
     return round(val, decimals) if decimals is not None else val
 
+
+def random_color() -> str:
+    """
+    Generates a random hex color string (e.g. "#3FA7B2").
+
+    Returns:
+        str: A random hex color in the format "#RRGGBB".
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import random_color
+
+            color = random_color()  # -> e.g. "#3FA7B2"
+
+        === "The Traditional Way"
+            ```python
+            import random
+
+            color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+            ```
+    """
+
+    return "#{:06x}".format(random.randint(0, 0xFFFFFF))
