@@ -5,6 +5,7 @@ import pytest
 from py_simple_package.src.py_simple import (
     pick_random_items as public_pick_random_items,
     random_date as public_random_date,
+    random_choice_weighted as public_random_choice_weighted,
     random_float as public_random_float,
 )
 from py_simple_package.src.py_simple.easy_random import (
@@ -18,6 +19,7 @@ from py_simple_package.src.py_simple.easy_random import (
     random_int,
     roll_dice,
     shuffle_list,
+    random_choice_weighted,
 )
 
 
@@ -226,6 +228,43 @@ def test_random_float_with_decimals():
 def test_random_float_is_available_from_public_api():
     assert public_random_float is random_float
 
+def test_random_choice_weighted():
+    items = ["apple", "banana", "cherry"]
+    weights = [0.7, 0.2, 0.1]
+
+    for _ in range(20):
+        result = random_choice_weighted(items, weights)
+        assert result in items
+
+def test_random_choice_weighted_rejects_empty_items():
+    with pytest.raises(ValueError, match="empty sequence"):
+        random_choice_weighted([], [])
+
+def test_random_choice_weighted_rejects_mismatched_lengths():
+    with pytest.raises(ValueError, match="same length"):
+        random_choice_weighted(
+            ["apple", "banana"],
+            [0.7],
+        )
+
+def test_random_choice_weighted_uses_weights(monkeypatch):
+    received = {}
+
+    def fake_choices(items, weights, k):
+        received["items"] = items
+        received["weights"] = weights
+        received["k"] = k
+        return ["banana"]
+
+    monkeypatch.setattr(
+        "py_simple_package.src.py_simple.easy_random.random.choices",
+        fake_choices,
+    )
+
+    result = random_choice_weighted(
+        ["apple", "banana"],
+        [0.2, 0.8],
+    )
 
 def test_random_date():
     from datetime import date
@@ -269,3 +308,9 @@ def test_random_date_inclusive_bounds(monkeypatch):
 
 def test_random_date_is_available_from_public_api():
     assert public_random_date is random_date
+    assert result == "banana"
+    assert received == {
+        "items": ["apple", "banana"],
+        "weights": [0.2, 0.8],
+        "k": 1,
+    }

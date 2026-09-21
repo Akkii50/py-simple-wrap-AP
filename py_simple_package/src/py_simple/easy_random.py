@@ -307,6 +307,22 @@ def random_date(start: date, end: date) -> date:
     Returns:
         date: A random date within [start, end], e.g.
             `date(2026, 7, 14)`.
+def random_choice_weighted(
+    items: Sequence[Any], weights: Sequence[float]
+) -> Any:
+    """
+    Picks one random item using the given weights.
+
+    Args:
+        items (Sequence[Any]): The collection to choose from.
+        weights (Sequence[float]): The relative probability of each item.
+
+    Returns:
+        Any: A randomly chosen element from the sequence.
+
+    Raises:
+        ValueError: If items and weights have different lengths or
+            if the sequence is empty.
 
     Example:
         === "The Py_simple Way"
@@ -315,6 +331,12 @@ def random_date(start: date, end: date) -> date:
             from py_simple import random_date
 
             day = random_date(date(2026, 1, 1), date(2026, 12, 31))
+            from py_simple import random_choice_weighted
+
+            fruit = random_choice_weighted(
+                ["apple", "banana", "cherry"],
+                [0.7, 0.2, 0.1],
+            )
             ```
 
         === "The Traditional Way"
@@ -332,3 +354,17 @@ def random_date(start: date, end: date) -> date:
     ordinal = random.randint(start.toordinal(), end.toordinal())
     return date.fromordinal(ordinal)
 
+
+            fruit = random.choices(
+                ["apple", "banana", "cherry"],
+                weights=[0.7, 0.2, 0.1],
+                k=1,
+            )[0]
+            ```
+    """
+    if not items:
+        raise ValueError("Cannot choose from an empty sequence.")
+    if len(items) != len(weights):
+        raise ValueError("items and weights must have the same length.")
+
+    return random.choices(items, weights=weights, k=1)[0]

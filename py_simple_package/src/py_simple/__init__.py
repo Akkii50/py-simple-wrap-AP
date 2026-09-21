@@ -210,6 +210,7 @@ from .easy_random import (
     random_int,
     roll_dice,
     shuffle_list,
+    random_choice_weighted,
 )
 from .easy_regex import (
     clean_extra_whitespace,
