@@ -19,6 +19,7 @@ from py_simple_package.src.py_simple.easy_random import (
     random_int,
     roll_dice,
     shuffle_list,
+    random_color,
     random_choice_weighted,
 )
 
@@ -228,6 +229,12 @@ def test_random_float_with_decimals():
 def test_random_float_is_available_from_public_api():
     assert public_random_float is random_float
 
+def test_random_color():
+    for _ in range(50):
+        color = random_color()
+        assert color.startswith("#")
+        assert len(color) == 7
+        int(color[1:], 16)
 def test_random_choice_weighted():
     items = ["apple", "banana", "cherry"]
     weights = [0.7, 0.2, 0.1]

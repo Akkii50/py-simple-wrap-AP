@@ -296,6 +296,12 @@ def random_float(start: float = 0.0, end: float = 1.0, decimals: int | None = No
     return round(val, decimals) if decimals is not None else val
 
 
+def random_color() -> str:
+    """
+    Generates a random hex color string (e.g. "#3FA7B2").
+
+    Returns:
+        str: A random hex color in the format "#RRGGBB".
 def random_date(start: date, end: date) -> date:
     """
     Generates a random date between start and end (inclusive).
@@ -353,6 +359,13 @@ def random_choice_weighted(
     Example:
         === "The Py_simple Way"
             ```python
+            from py_simple import random_color
+
+            color = random_color()  # -> e.g. "#3FA7B2"
+            from datetime import date
+            from py_simple import random_date
+
+            day = random_date(date(2026, 1, 1), date(2026, 12, 31))
             from py_simple import random_choice_weighted
 
             fruit = random_choice_weighted(
@@ -364,6 +377,24 @@ def random_choice_weighted(
         === "The Traditional Way"
             ```python
             import random
+
+            color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+            ```
+    """
+
+    return "#{:06x}".format(random.randint(0, 0xFFFFFF))
+            from datetime import date
+
+            ordinal = random.randint(date(2026, 1, 1).toordinal(),
+                                     date(2026, 12, 31).toordinal())
+            day = date.fromordinal(ordinal)
+            ```
+    """
+    if start > end:
+        raise ValueError("start cannot be greater than end.")
+    ordinal = random.randint(start.toordinal(), end.toordinal())
+    return date.fromordinal(ordinal)
+
 
             fruit = random.choices(
                 ["apple", "banana", "cherry"],
