@@ -642,6 +642,16 @@
         "test",
         "documentation"
       ]
+    },
+    {
+      "login": "jeslinstephy-sys",
+      "name": "jeslinstephy-sys",
+      "avatar_url": "https://github.com/jeslinstephy-sys.png",
+      "profile": "https://github.com/jeslinstephy-sys",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
