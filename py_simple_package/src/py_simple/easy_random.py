@@ -313,6 +313,32 @@ def random_date(start: date, end: date) -> date:
     Returns:
         date: A random date within [start, end], e.g.
             `date(2026, 7, 14)`.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from datetime import date
+            from py_simple import random_date
+
+            day = random_date(date(2026, 1, 1), date(2026, 12, 31))
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import random
+            from datetime import date
+
+            ordinal = random.randint(date(2026, 1, 1).toordinal(),
+                                     date(2026, 12, 31).toordinal())
+            day = date.fromordinal(ordinal)
+            ```
+    """
+    if start > end:
+        raise ValueError("start cannot be greater than end.")
+    ordinal = random.randint(start.toordinal(), end.toordinal())
+    return date.fromordinal(ordinal)
+
+
 def random_choice_weighted(
     items: Sequence[Any], weights: Sequence[float]
 ) -> Any:
@@ -383,3 +409,4 @@ def random_choice_weighted(
         raise ValueError("items and weights must have the same length.")
 
     return random.choices(items, weights=weights, k=1)[0]
+
