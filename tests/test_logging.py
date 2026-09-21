@@ -4,9 +4,12 @@ import logging
 
 import pytest
 
-import os
-
-from py_simple_package.src.py_simple.easy_logging import log_function, log_step, clear_log_file
+from py_simple_package.src.py_simple.easy_logging import (
+    clear_log_file,
+    log_function,
+    log_step,
+    read_recent_log_lines,
+)
 
 
 def test_log_step_logs_start_and_finish(caplog):
@@ -102,6 +105,7 @@ def test_log_function_missing_message_field_does_not_run_function(caplog):
     assert calls == []
     assert caplog.messages == []
 
+
 def test_clear_log_file_empties_existing_file(tmp_path):
     log_file = tmp_path / "app.log"
     log_file.write_text("line one\nline two\n")
@@ -118,3 +122,36 @@ def test_clear_log_file_returns_false_when_missing(tmp_path):
     result = clear_log_file(str(missing_file))
 
     assert result is False
+
+
+def test_read_recent_log_lines_returns_last_lines(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("line one\nline two\nline three\n")
+
+    assert read_recent_log_lines(str(log_file), line_count=2) == [
+        "line two",
+        "line three",
+    ]
+
+
+def test_read_recent_log_lines_returns_all_lines_when_count_is_large(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("line one\nline two\n")
+
+    assert read_recent_log_lines(str(log_file), line_count=10) == [
+        "line one",
+        "line two",
+    ]
+
+
+def test_read_recent_log_lines_returns_empty_list_when_missing(tmp_path):
+    missing_file = tmp_path / "missing.log"
+
+    assert read_recent_log_lines(str(missing_file)) == []
+
+
+def test_read_recent_log_lines_returns_empty_list_for_invalid_count(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("line one\n")
+
+    assert read_recent_log_lines(str(log_file), line_count=0) == []

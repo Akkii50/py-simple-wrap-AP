@@ -205,3 +205,43 @@ def clear_log_file(file_path: str) -> bool:
         pass
 
     return True
+
+
+def read_recent_log_lines(file_path: str, line_count: int = 10) -> list[str]:
+    """
+    Reads the most recent lines from a log file.
+
+    Args:
+        file_path (str): Path to the log file to read.
+        line_count (int, optional): Number of recent lines to return.
+            Defaults to `10`.
+
+    Returns:
+        list[str]: The last `line_count` lines without trailing newline
+            characters. Returns an empty list if the file does not exist
+            or if `line_count` is less than `1`.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import read_recent_log_lines
+
+            recent_lines = read_recent_log_lines("app.log", line_count=5)
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import os
+
+            if os.path.exists("app.log"):
+                with open("app.log") as log_file:
+                    recent_lines = [line.rstrip("\\n") for line in log_file.readlines()[-5:]]
+            else:
+                recent_lines = []
+            ```
+    """
+    if line_count < 1 or not os.path.exists(file_path):
+        return []
+
+    with open(file_path) as log_file:
+        return [line.rstrip("\n") for line in log_file.readlines()[-line_count:]]

@@ -164,7 +164,8 @@ from .easy_lists import (
 from .easy_logging import (
     clear_log_file,
     log_function,
-    log_step
+    log_step,
+    read_recent_log_lines,
 )
 from .easy_math import (
     calculate_simple_interest,
