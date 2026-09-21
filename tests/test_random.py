@@ -273,6 +273,14 @@ def test_random_choice_weighted_uses_weights(monkeypatch):
         [0.2, 0.8],
     )
 
+    assert result == "banana"
+    assert received == {
+        "items": ["apple", "banana"],
+        "weights": [0.2, 0.8],
+        "k": 1,
+    }
+
+
 def test_random_date():
     from datetime import date
 
@@ -315,9 +323,3 @@ def test_random_date_inclusive_bounds(monkeypatch):
 
 def test_random_date_is_available_from_public_api():
     assert public_random_date is random_date
-    assert result == "banana"
-    assert received == {
-        "items": ["apple", "banana"],
-        "weights": [0.2, 0.8],
-        "k": 1,
-    }
