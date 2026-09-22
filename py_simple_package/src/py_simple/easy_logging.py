@@ -245,3 +245,50 @@ def read_recent_log_lines(file_path: str, line_count: int = 10) -> list[str]:
 
     with open(file_path) as log_file:
         return [line.rstrip("\n") for line in log_file.readlines()[-line_count:]]
+
+
+def find_log_lines(file_path: str, search_text: str) -> list[str]:
+    """
+    Returns log file lines that contain the supplied search text.
+
+    Searches case sensitively and removes trailing newline characters from
+    returned lines. Returns an empty list when the file does not exist or
+    when no lines contain the search text.
+
+    Args:
+        file_path (str): Path to the log file to search.
+        search_text (str): Text to look for in each log line.
+
+    Returns:
+        list[str]: Matching log lines without trailing newline characters.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple.easy_logging import find_log_lines
+
+            errors = find_log_lines("app.log", "ERROR")
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import os
+
+            if os.path.exists("app.log"):
+                with open("app.log") as log_file:
+                    errors = [
+                        line.rstrip("\\n")
+                        for line in log_file
+                        if "ERROR" in line
+                    ]
+            else:
+                errors = []
+            ```
+    """
+    if not os.path.exists(file_path):
+        return []
+
+    with open(file_path) as log_file:
+        return [
+            line.rstrip("\n") for line in log_file if search_text in line
+        ]
