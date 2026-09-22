@@ -14,6 +14,7 @@ from py_simple_package.src.py_simple.easy_flow import (
     run_with_delay,
     time_function_call,
     time_it,
+    wait_until,
 )
 
 
@@ -294,3 +295,39 @@ def test_run_with_delay():
     # Test that it successfully runs after a tiny delay and returns correct math
     result = run_with_delay(0.01, sample_add, 5, 5)
     assert result == 10
+
+
+def test_wait_until_returns_true_when_condition_is_ready():
+    calls = []
+
+    def condition():
+        calls.append(1)
+        return len(calls) == 3
+
+    assert wait_until(condition, timeout=1, interval=0) is True
+    assert len(calls) == 3
+
+
+def test_wait_until_returns_false_after_timeout(monkeypatch):
+    times = iter([0, 0.2, 0.4, 0.6])
+    sleep_calls = []
+
+    monkeypatch.setattr(time, "time", lambda: next(times))
+    monkeypatch.setattr(time, "sleep", lambda delay: sleep_calls.append(delay))
+
+    assert wait_until(lambda: False, timeout=0.5, interval=0.1) is False
+    assert sleep_calls == [0.1, 0.1]
+
+
+def test_wait_until_checks_condition_after_timeout(monkeypatch):
+    times = iter([0, 1])
+    calls = []
+
+    monkeypatch.setattr(time, "time", lambda: next(times))
+
+    def condition():
+        calls.append(1)
+        return len(calls) == 1
+
+    assert wait_until(condition, timeout=0.5, interval=0.1) is True
+    assert len(calls) == 1
