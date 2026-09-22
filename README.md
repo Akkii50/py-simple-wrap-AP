@@ -179,5 +179,3 @@ gets built next. **[Take the 2-minute survey →](https://docs.google.com/forms/
 <sub>Built for beginners, grown by 60+ contributors ✨</sub>
  
 </div>
-#   g i t h u b - v i d e o s t a t  
- 
