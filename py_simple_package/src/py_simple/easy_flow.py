@@ -369,3 +369,51 @@ def run_with_delay(delay: float | int, func, *args, **kwargs):
     """
     time.sleep(delay)
     return func(*args, **kwargs)
+
+
+def wait_until(condition, timeout: float | int = 5, interval: float | int = 0.1) -> bool:
+    """
+    Waits until a condition function returns True, or until a timeout
+    is reached.
+
+    Args:
+        condition (callable): A function that returns True when the
+            waiting should stop.
+        timeout (int or float, optional): Maximum number of seconds to
+            wait. Defaults to `5`.
+        interval (int or float, optional): Seconds to wait between
+            checks. Defaults to `0.1`.
+
+    Returns:
+        bool: True if the condition became true before the timeout,
+            otherwise False.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import wait_until
+
+            ready = wait_until(lambda: file_exists("report.csv"), timeout=10)
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import time
+
+            start = time.time()
+            ready = False
+            while time.time() - start < 10:
+                if file_exists("report.csv"):
+                    ready = True
+                    break
+                time.sleep(0.1)
+            ```
+    """
+    start = time.time()
+
+    while time.time() - start < timeout:
+        if condition():
+            return True
+        time.sleep(interval)
+
+    return bool(condition())

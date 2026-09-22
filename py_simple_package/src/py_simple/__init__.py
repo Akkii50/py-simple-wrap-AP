@@ -115,6 +115,7 @@ from .easy_flow import (
     run_with_fallback,
     time_function_call,
     time_it,
+    wait_until,
 )
 from .easy_game import (
     basic_game_setup,
