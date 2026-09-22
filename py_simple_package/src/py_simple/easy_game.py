@@ -261,6 +261,60 @@ def fill_background(screen: pygame.Surface, color: tuple = (0, 0, 0)) -> None:
         raise EasyGameError(str(e)) from None
 
 
+def draw_text(
+    screen: pygame.Surface,
+    text: str,
+    position: tuple,
+    font_size: int = 36,
+    color: tuple = (255, 255, 255),
+) -> pygame.Rect:
+    """
+    Draws text on a game screen using pygame's default font, saving
+    you from creating a font, rendering text, and blitting it yourself.
+
+    Args:
+        screen (pygame.Surface): The pygame surface to draw on.
+        text (str): The text to display.
+        position (tuple): `(x, y)` coordinates for the text's top-left
+            corner, in pixels.
+        font_size (int, optional): Size of the text, in pixels.
+            Defaults to `36`.
+        color (tuple, optional): RGB tuple for the text color.
+            Defaults to white `(255, 255, 255)`.
+
+    Returns:
+        pygame.Rect: The rectangle covering the text after it is drawn.
+
+    Raises:
+        EasyGameError: If pygame cannot create, render, or draw the text.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import basic_game_setup, draw_text
+
+            screen, clock = basic_game_setup(800, 600)
+            draw_text(screen, "Score: 10", (20, 20))
+            ```
+
+        === "The Traditional Way"
+            ```python
+            import pygame
+
+            screen = pygame.display.set_mode((800, 600))
+            font = pygame.font.Font(None, 36)
+            text_surface = font.render("Score: 10", True, (255, 255, 255))
+            screen.blit(text_surface, (20, 20))
+            ```
+    """
+    try:
+        font = pygame.font.Font(None, font_size)
+        text_surface = font.render(text, True, color)
+        return screen.blit(text_surface, position)
+    except Exception as e:
+        raise EasyGameError(str(e)) from None
+
+
 def is_key_pressed(key_name: str) -> bool:
     """
     Checks whether a specific keyboard key is currently held down,
