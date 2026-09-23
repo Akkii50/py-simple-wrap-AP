@@ -1,3 +1,4 @@
+import time
 """
 easy_async is built to simplify asynchronous code execution.
 """
@@ -199,3 +200,57 @@ def run_with_timeout(func, timeout: float, *args) -> tuple:
             return (func.__name__, result)
     except Exception as e:
         raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
+
+    
+
+def run_with_retry(func , attempts: int , delay: float , *args) -> tuple:
+    """
+     Runs function asynchronously with attempts to return the result and retry.
+
+     Raises EasyAsyncError when all attempts fail.
+
+     Args:
+        func (callable):The function called to be executed.
+        attempts (int):Number of retry/attempts to get the result.
+        delay (float):Time of waiting before retrying.
+        *args: Positional arguments to pass to the function.
+
+     Returns:
+        tuple: Which contains `(func.__name__, result)`.
+    
+     Example:
+         === "The Py_simple Way"
+         ```python
+         from py_simple import run_with_retry
+                def num(n1 , n2):
+                    return n1 + n2
+
+                run_with_retry(num , 4 , 2.0, 2 , 3) # ->("num",5)
+         ```
+
+    === "The Traditional Way"
+         ```python
+                import time
+                for attempt in range(4):
+                    try:
+                        result = num(2,3)
+                        return(num.__name__, result)
+                    except Exception as e:
+                        if attempt == 4-1:
+                            raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
+                        else:
+                            time.sleep(2.3)
+         ```
+
+    """
+    for attempt in range(attempts):
+        try:
+            result = func(*args)
+            return(func.__name__, result)
+        except Exception as e:
+            if attempt == attempts-1:
+                raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
+            else:
+                time.sleep(delay)
+
+

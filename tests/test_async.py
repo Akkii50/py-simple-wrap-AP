@@ -5,6 +5,7 @@ from py_simple_package.src.py_simple.easy_async import (
     run_at_the_same_time_no_params,
     run_at_the_same_time_with_params,
     run_with_timeout,
+    run_with_retry,
 )
 
 
@@ -80,3 +81,18 @@ def test_run_with_timeout_failure():
 
     with pytest.raises(EasyAsyncError):
         run_with_timeout(slow_func, 0.1)
+
+
+def test_run_with_retry_success():
+    def num(n1 , n2):
+        return n1 + n2
+
+    result = run_with_retry(num,4,2.0,2,3)
+    assert result ==  ("num",5)
+
+def test_run_with_retry_fail():
+    def num():
+        raise ValueError("Something went wrong")
+    
+    with pytest.raises(EasyAsyncError):
+        run_with_retry(num,3 , 2.0)
