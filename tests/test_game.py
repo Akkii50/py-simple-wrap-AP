@@ -3,12 +3,14 @@
 from types import SimpleNamespace
 
 import pytest
+from py_simple import draw_text as public_draw_text
 
 from py_simple_package.src.py_simple import easy_game
 from py_simple_package.src.py_simple.easy_game import (
     EasyGameError,
     basic_game_setup,
     check_if_quit,
+    draw_text,
     fill_background,
     get_mouse_position,
     is_left_mouse_button_clicked,
@@ -146,6 +148,52 @@ def test_fill_background(monkeypatch):
     bad_screen = SimpleNamespace(fill=fail_fill)
     with pytest.raises(EasyGameError, match="surface error"):
         fill_background(bad_screen, (255, 0, 0))
+
+
+def test_draw_text_renders_and_blits_text(monkeypatch):
+    """Text should be rendered with the default font and drawn on screen."""
+    screen = SimpleNamespace(blit=lambda surface, position: (surface, position))
+    calls = []
+    text_surface = object()
+
+    class FakeFont:
+        def render(self, text, antialias, color):
+            calls.append(("render", text, antialias, color))
+            return text_surface
+
+    def create_font(font_name, font_size):
+        calls.append(("font", font_name, font_size))
+        return FakeFont()
+
+    monkeypatch.setattr(easy_game.pygame.font, "Font", create_font)
+
+    result = draw_text(screen, "Score: 10", (20, 20), 24, (255, 0, 0))
+
+    assert calls == [
+        ("font", None, 24),
+        ("render", "Score: 10", True, (255, 0, 0)),
+    ]
+    assert result == (text_surface, (20, 20))
+
+
+def test_draw_text_is_available_from_public_package():
+    """The documented package-level draw_text import should work."""
+    assert public_draw_text.__name__ == "draw_text"
+
+
+def test_draw_text_wraps_pygame_errors(monkeypatch):
+    """Text-rendering failures should use the module's consistent exception."""
+    screen = SimpleNamespace(blit=lambda _surface, _position: None)
+
+    def fail_to_create_font(_font_name, _font_size):
+        raise RuntimeError("font unavailable")
+
+    monkeypatch.setattr(easy_game.pygame.font, "Font", fail_to_create_font)
+
+    with pytest.raises(EasyGameError, match="font unavailable") as exc_info:
+        draw_text(screen, "Score: 10", (20, 20))
+
+    assert exc_info.value.__cause__ is None
 
 
 @pytest.mark.parametrize(

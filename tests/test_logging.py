@@ -6,6 +6,7 @@ import pytest
 
 from py_simple_package.src.py_simple.easy_logging import (
     clear_log_file,
+    find_log_lines,
     log_function,
     log_step,
     read_recent_log_lines,
@@ -155,3 +156,26 @@ def test_read_recent_log_lines_returns_empty_list_for_invalid_count(tmp_path):
     log_file.write_text("line one\n")
 
     assert read_recent_log_lines(str(log_file), line_count=0) == []
+
+
+def test_find_log_lines_returns_matching_lines_without_newlines(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("INFO: Started\nERROR: Connection failed\nERROR: Retry\n")
+
+    assert find_log_lines(str(log_file), "ERROR") == [
+        "ERROR: Connection failed",
+        "ERROR: Retry",
+    ]
+
+
+def test_find_log_lines_returns_empty_list_when_nothing_matches(tmp_path):
+    log_file = tmp_path / "app.log"
+    log_file.write_text("INFO: Started\nWARNING: Slow response\n")
+
+    assert find_log_lines(str(log_file), "ERROR") == []
+
+
+def test_find_log_lines_returns_empty_list_when_file_is_missing(tmp_path):
+    missing_file = tmp_path / "missing.log"
+
+    assert find_log_lines(str(missing_file), "ERROR") == []

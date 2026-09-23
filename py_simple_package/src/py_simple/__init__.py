@@ -120,6 +120,7 @@ from .easy_flow import (
 from .easy_game import (
     basic_game_setup,
     check_if_quit,
+    draw_text,
     fill_background,
     get_mouse_position,
     is_left_mouse_button_clicked,
