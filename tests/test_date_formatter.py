@@ -23,6 +23,9 @@ from py_simple_package.src.py_simple.easy_date_formatter import (
     slash_mm_dd_yyyy,
     past_slash_mm_dd_yyyy,
     future_slash_mm_dd_yyyy,
+    iso_8601,
+    past_iso_8601,
+    future_iso_8601,
     list_available_formats,
     _FORMATS,
     _format_date,
@@ -139,6 +142,67 @@ class TestSlashDates:
         assert future_slash_dd_mm_yyyy(14) != slash_dd_mm_yyyy()
 
 
+class TestISO8601Dates:
+    """Tests for ISO-8601 UTC date and time formats."""
+
+    def test_iso_8601_format(self):
+        """Should return 'YYYY-MM-DDTHH:MM:SSZ' format."""
+        result = iso_8601()
+        assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$", result)
+
+    @patch("py_simple_package.src.py_simple.easy_date_formatter.datetime")
+    def test_iso_8601_mocked(self, mock_datetime):
+        """Should pin exact ISO-8601 output against a fixed now."""
+        mock_datetime.now.return_value = dt.datetime(
+            2026, 7, 20, 12, 34, 56, tzinfo=dt.timezone.utc
+        )
+        assert iso_8601() == "2026-07-20T12:34:56Z"
+
+    def test_past_iso_8601_format(self):
+        """Should return a valid ISO-8601 string for past date."""
+        result = past_iso_8601(7)
+        assert isinstance(result, str)
+        assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$", result)
+        assert result != iso_8601()
+
+    def test_past_iso_8601_zero_days(self):
+        """Zero days ago should produce an ISO date for today."""
+        result = past_iso_8601(0)
+        assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$", result)
+
+    @patch("py_simple_package.src.py_simple.easy_date_formatter.datetime")
+    def test_past_iso_8601_mocked(self, mock_datetime):
+        """Should correctly subtract specified days in ISO format."""
+        mock_datetime.now.return_value = dt.datetime(
+            2026, 7, 20, 12, 34, 56, tzinfo=dt.timezone.utc
+        )
+        assert past_iso_8601(7) == "2026-07-13T12:34:56Z"
+
+    def test_future_iso_8601_format(self):
+        """Should return a valid ISO-8601 string for future date."""
+        result = future_iso_8601(7)
+        assert isinstance(result, str)
+        assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$", result)
+        assert result != iso_8601()
+
+    def test_future_iso_8601_zero_days(self):
+        """Zero days from now should produce an ISO date for today."""
+        result = future_iso_8601(0)
+        assert re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$", result)
+
+    @patch("py_simple_package.src.py_simple.easy_date_formatter.datetime")
+    def test_future_iso_8601_mocked(self, mock_datetime):
+        """Should correctly add specified days in ISO format."""
+        mock_datetime.now.return_value = dt.datetime(
+            2026, 7, 20, 12, 34, 56, tzinfo=dt.timezone.utc
+        )
+        assert future_iso_8601(7) == "2026-07-27T12:34:56Z"
+
+    def test_past_vs_future_iso_symmetry(self):
+        """Past N days ago should differ from future N days from now."""
+        assert past_iso_8601(7) != future_iso_8601(7)
+
+
 class TestUtilityFunctions:
     """Tests for helper/utility functions."""
 
@@ -183,6 +247,7 @@ class TestUtilityFunctions:
             ("mm-dd-yyyy", "%m-%d-%Y"),
             ("dd/mm/yyyy", "%d/%m/%Y"),
             ("mm/dd/yyyy", "%m/%d/%Y"),
+            ("ISO-8601", "%Y-%m-%dT%H:%M:%SZ"),
         ],
     )
     def test_format_date_applies_registered_pattern(self, fmt_key, pattern):
