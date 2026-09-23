@@ -62,7 +62,7 @@ If you've never contributed to an open-source project before, here is exactly ho
        # Activate the virtual environment
        # Windows: .venv\Scripts\activate
        # macOS/Linux: source .venv/bin/activate
-       pip install -e .[test,docs]
+       pip install -e .[test,docs,ai]
        ```
      - Run the tests:
        ```bash

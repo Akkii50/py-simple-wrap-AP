@@ -56,7 +56,13 @@ Documentation = "https://sara-czasak.github.io/py-simple-wrap/docs/"
 Quickstart = "https://github.com/sara-czasak/py-simple-wrap/blob/main/QUICKSTART.md"
 
 [project.optional-dependencies]
-
+ai = [
+    "langchain-openai>=0.1.0",
+    "langchain-ollama>=0.1.0",
+    "langchain-anthropic>=0.1.0",
+    "langchain-google-genai>=1.0.0",
+    "langchain-mistralai>=0.1.0",
+]
 test = [
     "pytest>=7.0",
 ]
