@@ -682,6 +682,17 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "Akkii50",
+      "name": "Akkii50",
+      "avatar_url": "https://github.com/Akkii50.png",
+      "profile": "https://github.com/Akkii50",
+      "contributions": [
+        "test",
+        "code",
+        "documentation"
+      ]
     }
   ]
 }
