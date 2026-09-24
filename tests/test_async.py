@@ -5,6 +5,7 @@ from py_simple_package.src.py_simple.easy_async import (
     run_at_the_same_time_no_params,
     run_at_the_same_time_with_params,
     run_with_timeout,
+    run_concurrent_map,
 )
 
 
@@ -80,3 +81,19 @@ def test_run_with_timeout_failure():
 
     with pytest.raises(EasyAsyncError):
         run_with_timeout(slow_func, 0.1)
+
+def test_run_concurrent_map_success():
+    def double(x):
+        return x * 2
+
+    inputs = [1, 2, 3, 4, 5]
+    results = run_concurrent_map(double, inputs)
+    assert results == [2, 4, 6, 8, 10]
+
+
+def test_run_concurrent_map_error():
+    def divide_hundred_by(x):
+        return 100 // x
+
+    with pytest.raises(EasyAsyncError):
+        run_concurrent_map(divide_hundred_by, [10, 5, 0, 2])
