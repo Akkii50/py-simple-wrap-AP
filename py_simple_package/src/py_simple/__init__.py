@@ -10,6 +10,7 @@ from .easy_ai import (
 )
 from .easy_archive import (
     add_to_zip,
+    extract_file_from_zip,
     is_zip_file,
     list_zip_contents,
     unzip_file,
@@ -20,6 +21,8 @@ from .easy_async import (
     run_at_the_same_time_no_params,
     run_at_the_same_time_with_params,
     run_with_retry
+    run_with_timeout,
+    run_concurrent_map,
 )
 from .easy_colors import (
     contrast_ratio,
@@ -56,6 +59,7 @@ from .easy_converter import (
     sq_meters_to_sq_feet,
 )
 from .easy_csv import (
+    count_csv_rows,
     filter_csv_rows,
     get_csv_columns,
     read_csv_to_list,

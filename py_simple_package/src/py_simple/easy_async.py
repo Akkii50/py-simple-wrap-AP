@@ -255,3 +255,46 @@ def run_with_retry(func , attempts: int , delay: float , *args) -> tuple:
                 time.sleep(delay)
 
 
+def run_concurrent_map(func, items: list) -> list:
+    """
+    Applies a function to a list of items concurrently across multiple threads
+    and returns the results in the original order.
+
+    Raises EasyAsyncError if any function call raises an exception.
+
+    Args:
+        func (callable): The function to call on each item.
+        items (list): The list of items to pass one by one into the function.
+
+    Returns:
+        list: The list of return values in the same order as items.
+
+    Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import run_concurrent_map
+
+            def square(n):
+                return n * n
+
+            results = run_concurrent_map(square, [1, 2, 3, 4])
+            # -> [1, 4, 9, 16]
+            ```
+
+        === "The Traditional Way"
+            ```python
+            from concurrent.futures import ThreadPoolExecutor
+
+            def square(n):
+                return n * n
+
+            items = [1, 2, 3, 4]
+            with ThreadPoolExecutor() as executor:
+                results = list(executor.map(square, items))
+            ```
+    """
+    try:
+        with ThreadPoolExecutor() as executor:
+            return list(executor.map(func, items))
+    except Exception as e:
+        raise EasyAsyncError(f"\n\n\nERROR: {e}") from None    
