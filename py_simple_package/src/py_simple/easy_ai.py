@@ -336,6 +336,52 @@ def translate_text(
         raise EasyAIError(f"\n\n\nERROR: {e}") from None
 
 
+def rewrite_text(ai_model: BaseChatModel , text: str , tone:str = "calm" ) -> str:
+
+    """
+     Sends request to change the tone for provided text , 
+     without needing from user to change manually.
+
+     Args:
+        ai_model (BaseChatModel): A LangChain chat model instance,
+            such as one returned by `get_model()`.
+        text (str): Text that is used to change the tone for.
+        tone (str) : Used to decide tone for the text which the user wants 
+                (e.g. calm , angry , nervous , supportive..etc 
+                defualt is calm).
+     
+     Returns:
+        str: The text that tone got changed for.
+     
+     Raises:
+        EasyAIError: If the underlying model call fails.
+     
+     Example:
+        === "The Py_simple Way"
+            ```python
+            from py_simple import get_model, translate_text
+            model = get_model("anthropic", "claude-sonnet-4-6")
+            tone = rewrite_text(model , "hello py-simple-wrap devs" , "excited")
+            ```
+        
+        === "The Traditional Way"
+                ```python
+                from langchain_anthropic import ChatAnthropic
+                from langchain_core.messages import HumanMessage
+
+                model = ChatAnthropic(model_name="claude-sonnet-4-6")
+                tone = model.inovoke([HumanMessage(content="Change tone to excited:hello py-simple-wrap devs" )
+                ]).content
+                ```
+    """
+    try:
+        prompt = f"Change tone to {tone}:\n\n{text}"
+        return ask_ai(ai_model,prompt)
+    except Exception as e:
+        raise EasyAIError(f"\n\n\nERROR: {e}") from None
+
+
+ 
 # ⚠️️ WORK IN PROGRESS ⚠️
 # This class will eventually take the complexity of setting up an agent
 # with LangChain and turning it into something simple.

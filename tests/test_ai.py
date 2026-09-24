@@ -13,6 +13,7 @@ from py_simple_package.src.py_simple.easy_ai import (
     get_model,
     summarize_text,
     translate_text,
+    rewrite_text,
 )
 
 
@@ -253,3 +254,29 @@ def test_easy_agent_init_not_found():
     with pytest.raises(EasyAIError) as exc_info:
         EasyAgent("nonexistent_prompt.txt")
     assert "No such file or directory" in str(exc_info.value)
+
+
+def test_rewrite_text_success():
+    """Test that rewrite_text changes text tone and returns it"""
+    mock_model = MagicMock()
+    mock_response = MagicMock()
+    mock_response.content = "hello py-simple-wrap devs."
+    mock_model.invoke.return_value = mock_response
+        
+    result = rewrite_text(mock_model,"hello devs")
+    assert result == "hello py-simple-wrap devs."
+    mock_model.invoke.assert_called_once()
+
+def test_rewrite_text_error():
+    mock_model = MagicMock()
+    mock_model.invoke.side_effect = Exception("model failed")
+
+    with pytest.raises(EasyAIError) as exc_info:
+        rewrite_text(mock_model, "hello devs")
+
+    assert "model failed" in str(exc_info.value)
+
+
+
+
+
