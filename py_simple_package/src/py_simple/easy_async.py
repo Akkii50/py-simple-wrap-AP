@@ -1,9 +1,10 @@
-import time
+
 """
 easy_async is built to simplify asynchronous code execution.
 """
 
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 
 class EasyAsyncError(Exception):
@@ -220,26 +221,26 @@ def run_with_retry(func , attempts: int , delay: float , *args) -> tuple:
     
      Example:
          === "The Py_simple Way"
-         ```python
-         from py_simple import run_with_retry
-                def num(n1 , n2):
-                    return n1 + n2
+             ```python
+             from py_simple import run_with_retry
+             def num(n1 , n2):
+                 return n1 + n2
 
-                run_with_retry(num , 4 , 2.0, 2 , 3) # ->("num",5)
-         ```
+            run_with_retry(num , 4 , 2.0, 2 , 3) # ->("num",5)
+             ```
 
     === "The Traditional Way"
          ```python
-                import time
-                for attempt in range(4):
-                    try:
-                        result = num(2,3)
-                        return(num.__name__, result)
-                    except Exception as e:
-                        if attempt == 4-1:
-                            raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
-                        else:
-                            time.sleep(2.3)
+        import time
+        for attempt in range(4):
+            try:
+                result = num(2,3)
+                return(num.__name__, result)
+            except Exception as e:
+                if attempt == 4-1:
+                    raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
+                else:
+                    time.sleep(2.3)
          ```
 
     """
