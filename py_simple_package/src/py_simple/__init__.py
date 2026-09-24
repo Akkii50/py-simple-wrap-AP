@@ -10,6 +10,7 @@ from .easy_ai import (
 )
 from .easy_archive import (
     add_to_zip,
+    extract_file_from_zip,
     is_zip_file,
     list_zip_contents,
     unzip_file,
