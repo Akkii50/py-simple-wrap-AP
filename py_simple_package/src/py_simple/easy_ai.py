@@ -336,8 +336,7 @@ def translate_text(
         raise EasyAIError(f"\n\n\nERROR: {e}") from None
 
 
-def rewrite_text(ai_model: BaseChatModel , text: str , tone:str = "calm" ) -> str:
-
+def rewrite_text(ai_model: BaseChatModel, text: str, tone: str = "calm") -> str:
     """
      Sends request to change the tone for provided text , 
      without needing from user to change manually.
@@ -359,7 +358,7 @@ def rewrite_text(ai_model: BaseChatModel , text: str , tone:str = "calm" ) -> st
      Example:
         === "The Py_simple Way"
             ```python
-            from py_simple import get_model, translate_text
+            from py_simple import get_model, rewrite_text
             model = get_model("anthropic", "claude-sonnet-4-6")
             tone = rewrite_text(model , "hello py-simple-wrap devs" , "excited")
             ```
@@ -370,7 +369,7 @@ def rewrite_text(ai_model: BaseChatModel , text: str , tone:str = "calm" ) -> st
                 from langchain_core.messages import HumanMessage
 
                 model = ChatAnthropic(model_name="claude-sonnet-4-6")
-                tone = model.inovoke([HumanMessage(content="Change tone to excited:hello py-simple-wrap devs" )
+                tone = model.invoke([HumanMessage(content="Change tone to excited:hello py-simple-wrap devs" )
                 ]).content
                 ```
     """
@@ -379,6 +378,9 @@ def rewrite_text(ai_model: BaseChatModel , text: str , tone:str = "calm" ) -> st
         return ask_ai(ai_model,prompt)
     except Exception as e:
         raise EasyAIError(f"\n\n\nERROR: {e}") from None
+
+
+
 
 
  

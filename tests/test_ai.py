@@ -277,6 +277,22 @@ def test_rewrite_text_error():
     assert "model failed" in str(exc_info.value)
 
 
+def test_rewrite_text_includes_tone_in_prompt():
+    mock_model = MagicMock()
+    mock_model.invoke.return_value = MagicMock(content="rewritten")
+    rewrite_text(mock_model, "hello devs", tone="excited")
+    prompt = mock_model.invoke.call_args[0][0]
+    assert "excited" in prompt
+    assert "hello devs" in prompt
+
+
+def test_rewrite_text_default_tone():
+    mock_model = MagicMock()
+    mock_model.invoke.return_value = MagicMock(content="ok")
+    rewrite_text(mock_model, "hello devs")
+    assert "calm" in mock_model.invoke.call_args[0][0]
+
+
 
 
 
