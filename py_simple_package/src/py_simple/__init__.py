@@ -137,6 +137,7 @@ from .easy_generator import (
     generate_api_key,
     generate_otp,
     generate_password,
+    generate_pin,
     generate_qr_code,
     generate_slug,
     generate_uuid,
