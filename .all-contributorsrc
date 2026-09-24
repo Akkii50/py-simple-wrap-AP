@@ -693,6 +693,16 @@
         "code",
         "documentation"
       ]
+    },
+    {
+      "login": "Joe",
+      "name": "cybs-joe",
+      "avatar_url": "https://github.com/cybs-joe.png",
+      "profile": "https://github.com/cybs-joe",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ]
 }

@@ -200,6 +200,7 @@ def run_with_timeout(func, timeout: float, *args) -> tuple:
     except Exception as e:
         raise EasyAsyncError(f"\n\n\nERROR: {e}") from None
 
+
 def run_concurrent_map(func, items: list) -> list:
     """
     Applies a function to a list of items concurrently across multiple threads
