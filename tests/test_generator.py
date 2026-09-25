@@ -149,7 +149,7 @@ def test_generate_qr_code_wraps_generation_error(monkeypatch):
         raise RuntimeError("QR generation failed")
 
     monkeypatch.setattr(
-        "py_simple_package.src.py_simple.easy_generator.qrcode.make",
+        "qrcode.make",
         fail,
     )
 
@@ -166,7 +166,7 @@ def test_generate_qr_code_wraps_save_error(monkeypatch):
             raise OSError(f"Cannot save {filename}")
 
     monkeypatch.setattr(
-        "py_simple_package.src.py_simple.easy_generator.qrcode.make",
+        "qrcode.make",
         lambda data: BrokenImage(),
     )
 
