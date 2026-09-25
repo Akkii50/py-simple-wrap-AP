@@ -7,6 +7,7 @@ from .easy_ai import (
     get_model,
     summarize_text,
     translate_text,
+    rewrite_text,
 )
 from .easy_archive import (
     add_to_zip,
