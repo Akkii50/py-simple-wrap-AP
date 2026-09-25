@@ -8,7 +8,7 @@
 <!-- docs-site-start -->
 
 <div align="center" markdown="1">
-<img src="docs/assets/logo.jpg" alt="py-simple-wrap logo" width="150" height="150" style="border-radius: 50%; object-fit: cover;">
+<img src="https://raw.githubusercontent.com/sara-czasak/py-simple-wrap/main/docs/assets/logo.jpg" alt="py-simple-wrap logo" width="150" height="150" style="border-radius: 50%; object-fit: cover;">
  
 <h1 id="py-simple-wrap" style="margin-top: 0;">py-simple-wrap</h1>
 

@@ -1,6 +1,12 @@
-# py-simple-wrap
+<div align="center" markdown="1">
 
-**Making Python feel like plain English.**
+<img src="assets/logo.jpg" alt="py-simple-wrap logo" width="150" height="150" style="border-radius: 50%; object-fit: cover;">
+
+<h1 id="py-simple-wrap" style="margin-top: 0;">py-simple-wrap</h1>
+
+**_Making Python feel like plain English._**
+
+</div>
 
 py-simple-wrap is a beginner-friendly Python package that wraps common, everyday tasks — file handling, date formatting, unit conversion, and more — into simple, readable functions. No boilerplate, no memorizing syntax you'll forget in a week.
 
