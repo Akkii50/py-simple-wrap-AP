@@ -338,27 +338,28 @@ def translate_text(
 
 def rewrite_text(ai_model: BaseChatModel, text: str, tone: str = "calm") -> str:
     """
-     Sends request to change the tone for provided text , 
-     without needing from user to change manually.
+    Sends a request to change the tone of the provided text,
+    without you having to change it manually.
 
-     Args:
+    Args:
         ai_model (BaseChatModel): A LangChain chat model instance,
             such as one returned by `get_model()`.
-        text (str): Text that is used to change the tone for.
-        tone (str) : Used to decide tone for the text which the user wants 
-                (e.g. calm , angry , nervous , supportive..etc 
-                defualt is calm).
+        text (str): Text whose tone will be changed.
+        tone (str) : Used to decide the tone for the text that the user
+        wants (e.g. calm, angry, nervous, supportive, etc., by defualt the
+        tone is calm).
      
-     Returns:
-        str: The text that tone got changed for.
+    Returns:
+        str: The text with its tone changed.
      
-     Raises:
+    Raises:
         EasyAIError: If the underlying model call fails.
      
-     Example:
+    Example:
         === "The Py_simple Way"
             ```python
             from py_simple import get_model, rewrite_text
+
             model = get_model("anthropic", "claude-sonnet-4-6")
             tone = rewrite_text(model , "hello py-simple-wrap devs" , "excited")
             ```
