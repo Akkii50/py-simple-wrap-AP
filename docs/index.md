@@ -8,11 +8,13 @@ py-simple-wrap is a beginner-friendly Python package that wraps common, everyday
 pip install py-simple-wrap
 ```
 
+This installs the lightweight core; a few modules need extra packages — see the Quickstart Tutorial below for the full list.
+
 ## Where to go next
 
 - **New here?** Start with the [Quickstart Tutorial](tutorial/quickstart.md) to get up and running in a couple of minutes.
 - **Want to contribute?** Check the [Contributing guide](how-to/contributing.md).
-- **Looking for a specific function?** Browse the [Reference](reference/easy_web.md) for full details on every module.
+- **Looking for a specific function?** Browse the [Book of Modules](https://sara-czasak.github.io/py-simple-wrap/modules/) for full details on every module.
 - **Curious about the project itself?** See [Contributors](about/contributors.md) and [License](about/license.md).
 
 ## Why py-simple-wrap?

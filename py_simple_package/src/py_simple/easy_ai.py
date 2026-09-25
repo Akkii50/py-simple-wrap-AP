@@ -2,11 +2,10 @@
 easy_ai wraps common LangChain functionality to make it easier to use.
 """
 
-from typing import Any
-
-from langchain_core.language_models import BaseChatModel
-from langchain_core.messages import AIMessage, HumanMessage
-from pydantic import SecretStr
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any
+if TYPE_CHECKING:
+    from langchain_core.language_models import BaseChatModel
 
 
 class EasyAIError(Exception):
@@ -105,6 +104,7 @@ def get_model(
 
     elif provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
+        from pydantic import SecretStr
 
         api_key = SecretStr(api_key) if api_key is not None else None
         model = ChatAnthropic(
@@ -230,6 +230,8 @@ def ai_chat(ai_model: BaseChatModel) -> None:
                 print(f"AI: {response}")
             ```
     """
+    from langchain_core.messages import AIMessage, HumanMessage
+
     history = []
     while True:
         try:

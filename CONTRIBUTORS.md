@@ -4,6 +4,8 @@
 
 </div>
 
+<!-- docs-site-start -->
+
 # py-simple-wrap Contributors 🌟
 
 A massive thank you to everyone who has helped build, refine, and grow `py-simple-wrap`. This project exists to help beginners, and it wouldn't be where it is today without the support of the community.

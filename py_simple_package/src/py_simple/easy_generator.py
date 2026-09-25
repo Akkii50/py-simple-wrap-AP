@@ -10,8 +10,6 @@ import string
 import unicodedata
 import uuid
 
-import qrcode
-
 
 class EasyGeneratorError(Exception):
     """
@@ -212,8 +210,9 @@ def generate_qr_code(data_to_encode: str) -> None:
     if not data_to_encode:
         raise EasyGeneratorError("You need to provide some data to encode")
     try:
-        img = qrcode.make(data_to_encode)
+        import qrcode
 
+        img = qrcode.make(data_to_encode)
         num = 0
         good_filename = False
         while not good_filename:
