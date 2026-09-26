@@ -56,18 +56,18 @@ def gh_workflow_config(filename: str, at_root: bool = True) -> None:
             with open(".github/workflows/issues.yml", "w",
                       encoding="utf-8") as f:
                 f.write(
-                    "name: issues{os.linesep}"
-                    "{os.linesep}"
-                    "on:{os.linesep}"
-                    "{os.linesep}"
-                    "jobs:{os.linesep}"
-                    "  build:{os.linesep}"
-                    "    runs-on: ubuntu-latest{os.linesep}"
-                    "{os.linesep}"
-                    "    steps:{os.linesep}"
-                    "      - uses: actions/checkout@v7{os.linesep}"
-                    "      - name:{os.linesep}"
-                    "        run:{os.linesep}"
+                    "name: issues\n"
+                    "\n"
+                    "on:\n"
+                    "\n"
+                    "jobs:\n"
+                    "  build:\n"
+                    "    runs-on: ubuntu-latest\n"
+                    "\n"
+                    "    steps:\n"
+                    "      - uses: actions/checkout@v7\n"
+                    "      - name:\n"
+                    "        run:\n"
                 )
             ```
     """
