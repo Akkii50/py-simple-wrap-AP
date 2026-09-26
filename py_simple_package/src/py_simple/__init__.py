@@ -8,6 +8,7 @@ from .easy_ai import (
     summarize_text,
     translate_text,
     rewrite_text,
+    analyze_sentiment,
 )
 from .easy_archive import (
     add_to_zip,
